@@ -11,7 +11,7 @@ import {
 	MenuItem,
 	MenuList,
 } from "@chakra-ui/react";
-import { BaseLogo } from "../icons";
+import { BaseImage } from "../icons";
 import { ButtonBasic, ButtonOutlinePrimary, ButtonPrimary } from "../button";
 import { RiMenu2Line, RiArrowDropDownLine } from "react-icons/ri";
 import { SearchBar } from "../search-bar";
@@ -84,7 +84,7 @@ export function Navbar() {
 							<RiMenu2Line />
 						</Icon>
 					</Button>
-					<BaseLogo
+					<BaseImage
 						w={{ base: "100px", md: "150px" }}
 						h={"auto"}
 					/>

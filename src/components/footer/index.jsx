@@ -1,5 +1,5 @@
 import { HStack, Link, Text, VStack } from "@chakra-ui/react";
-import { LogoWhite } from "../icons";
+import { WhiteImage } from "../icons";
 
 export function Footer() {
 	const links = [
@@ -23,7 +23,7 @@ export function Footer() {
 			py={7}
 			spacing={4}
 		>
-			<LogoWhite
+			<WhiteImage
 				w={{ base: "100px", lg: "150px" }}
 				h={"auto"}
 			/>
