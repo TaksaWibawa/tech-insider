@@ -1,4 +1,4 @@
-import { HStack, Text, VStack } from "@chakra-ui/react";
+import { Button, HStack, Text, VStack } from "@chakra-ui/react";
 import { WhiteImage } from "../icons";
 import { NavLink } from "react-router-dom";
 
@@ -32,16 +32,20 @@ export function Footer() {
 				{links.map((link) => (
 					<NavLink
 						key={link.text}
-						href={link.href}
-						color={"white"}
-						fontSize={"xs"}
-						fontWeight={"normal"}
-						textDecoration={"underline"}
-						_hover={{
-							color: "whiteAlpha.700",
-						}}
+						to={link.href}
 					>
-						{link.text}
+						<Button
+							variant={"link"}
+							color={"white"}
+							fontSize={"xs"}
+							fontWeight={"normal"}
+							textDecoration={"underline"}
+							_hover={{
+								color: "whiteAlpha.700",
+							}}
+						>
+							{link.text}
+						</Button>
 					</NavLink>
 				))}
 			</HStack>
