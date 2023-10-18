@@ -1,6 +1,7 @@
 import { Route, Routes } from "react-router-dom";
 import { BaseLayout } from "./layouts";
 import RegisterPage from "./pages/register.page";
+import LoginPage from "./pages/login.page";
 
 function App() {
 	return (
@@ -11,7 +12,7 @@ function App() {
 			/>
 			<Route
 				path="/login"
-				element={<h1>Hello Login</h1>}
+				element={<LoginPage />}
 			/>
 			<Route
 				path="/register"

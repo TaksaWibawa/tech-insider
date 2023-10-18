@@ -7,7 +7,7 @@ export function ButtonBasic({ children, ...rest }) {
 			variant={"solid"}
 			bgColor={"transparent"}
 			color={"#828282"}
-			py={6}
+			py={5}
 			px={6}
 			rounded={"md"}
 			fontSize={{ base: "sm", lg: "md" }}
@@ -30,7 +30,7 @@ export function ButtonPrimary({ children, ...rest }) {
 			colorScheme="blue"
 			bg={"blue.500"}
 			border={"1px solid transparent"}
-			py={6}
+			py={5}
 			px={6}
 			rounded={"md"}
 			fontSize={{ base: "sm", lg: "md" }}
@@ -48,7 +48,7 @@ export function ButtonOutlinePrimary({ children, ...rest }) {
 			colorScheme="blue"
 			borderColor={"blue.500"}
 			color={"blue.500"}
-			py={6}
+			py={5}
 			px={6}
 			rounded={"md"}
 			fontSize={{ base: "sm", lg: "md" }}
