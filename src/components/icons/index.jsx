@@ -1,29 +1,32 @@
 import { Image } from "@chakra-ui/react";
+import Logo from "../../assets/logo.png";
+import LogoWhite from "../../assets/logo-white.png";
+import SignUp from "../../assets/signup-illustration.png";
 
-export function BaseLogo({ ...props }) {
+export function BaseImage({ ...props }) {
 	return (
 		<Image
-			src="src/assets/logo.png"
+			src={Logo}
 			alt="Tech Insider"
 			{...props}
 		/>
 	);
 }
 
-export function LogoWhite({ ...props }) {
+export function WhiteImage({ ...props }) {
 	return (
 		<Image
-			src="src/assets/logo-white.png"
+			src={LogoWhite}
 			alt="Tech Insider"
 			{...props}
 		/>
 	);
 }
 
-export function SignUpIcon({ ...props }) {
+export function SignUpImage({ ...props }) {
 	return (
 		<Image
-			src="src/assets/signup-illustration.png"
+			src={SignUp}
 			alt="Sign Up"
 			{...props}
 		/>

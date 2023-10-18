@@ -3,7 +3,7 @@ import { BaseLayout, GridLayout } from "../layouts";
 import { Box, Button, GridItem, Heading, Text, VStack } from "@chakra-ui/react";
 import { Link } from "react-router-dom";
 import { SignUpForm } from "../components/form/signup";
-import { SignUpIcon } from "../components/icons";
+import { SignUpImage } from "../components/icons";
 
 function RegisterPage() {
 	return (
@@ -61,7 +61,7 @@ function RegisterPage() {
 					pl={{ base: 0, xl: 20 }}
 				>
 					<Box>
-						<SignUpIcon
+						<SignUpImage
 							w={"full"}
 							h={"auto"}
 						/>
