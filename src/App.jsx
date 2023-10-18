@@ -17,6 +17,14 @@ function App() {
 				path="/register"
 				element={<RegisterPage />}
 			/>
+			<Route
+				path="*"
+				element={
+					<BaseLayout>
+						<h1>Not Found</h1>
+					</BaseLayout>
+				}
+			/>
 		</Routes>
 	);
 }
