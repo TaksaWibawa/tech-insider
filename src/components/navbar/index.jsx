@@ -85,7 +85,7 @@ export function Navbar() {
 						</Icon>
 					</Button>
 					<BaseImage
-						w={{ base: "100px", md: "150px" }}
+						w={{ base: "100px", md: "110px", lg: "140px" }}
 						h={"auto"}
 					/>
 					<SearchBar display={{ base: "none", md: "block" }} />
