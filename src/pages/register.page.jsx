@@ -1,7 +1,7 @@
 /* eslint-disable react/no-unescaped-entities */
 import { BaseLayout, GridLayout } from "../layouts";
 import { Box, Button, GridItem, Heading, Text, VStack } from "@chakra-ui/react";
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import { SignUpForm } from "../components/form/signup";
 import { SignUpImage } from "../components/icons";
 
@@ -38,7 +38,7 @@ function RegisterPage() {
 						<SignUpForm />
 						<Text fontSize={{ base: "xs", lg: "md" }}>
 							Already have an account?
-							<Link to="/login">
+							<NavLink to="/login">
 								<Button
 									color="blue.500"
 									variant="link"
@@ -47,7 +47,7 @@ function RegisterPage() {
 								>
 									Sign In
 								</Button>
-							</Link>
+							</NavLink>
 						</Text>
 					</VStack>
 				</GridItem>
