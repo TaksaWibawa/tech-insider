@@ -29,6 +29,7 @@ export function SignUpImage({ ...props }) {
 		<Image
 			src={SignUp}
 			alt="Sign Up"
+			loading="lazy"
 			{...props}
 		/>
 	);
@@ -39,6 +40,7 @@ export function SignInImage({ ...props }) {
 		<Image
 			src={SignIn}
 			alt="Sign In"
+			loading="lazy"
 			{...props}
 		/>
 	);
