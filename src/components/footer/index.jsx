@@ -1,5 +1,6 @@
-import { HStack, Link, Text, VStack } from "@chakra-ui/react";
+import { HStack, Text, VStack } from "@chakra-ui/react";
 import { WhiteImage } from "../icons";
+import { NavLink } from "react-router-dom";
 
 export function Footer() {
 	const links = [
@@ -29,7 +30,7 @@ export function Footer() {
 			/>
 			<HStack spacing={"4"}>
 				{links.map((link) => (
-					<Link
+					<NavLink
 						key={link.text}
 						href={link.href}
 						color={"white"}
@@ -41,7 +42,7 @@ export function Footer() {
 						}}
 					>
 						{link.text}
-					</Link>
+					</NavLink>
 				))}
 			</HStack>
 			<Text

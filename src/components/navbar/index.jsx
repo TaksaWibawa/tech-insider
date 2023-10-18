@@ -15,7 +15,7 @@ import { BaseImage } from "../icons";
 import { ButtonBasic, ButtonOutlinePrimary, ButtonPrimary } from "../button";
 import { RiMenu2Line, RiArrowDropDownLine } from "react-icons/ri";
 import { SearchBar } from "../search-bar";
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import { useState } from "react";
 
 export function Navbar() {
@@ -97,26 +97,26 @@ export function Navbar() {
 					display={{ base: "none", md: "flex" }}
 				>
 					<ButtonGroup gap={2}>
-						<Link to="/">
+						<NavLink to="/">
 							<ButtonBasic>Home</ButtonBasic>
-						</Link>
+						</NavLink>
 
 						{!isAuth ? (
 							<>
-								<Link to="/login">
+								<NavLink to="/login">
 									<ButtonOutlinePrimary onClick={() => setIsAuth(!isAuth)}>
 										Sign In
 									</ButtonOutlinePrimary>
-								</Link>
-								<Link to="/register">
+								</NavLink>
+								<NavLink to="/register">
 									<ButtonPrimary>Sign Up</ButtonPrimary>
-								</Link>
+								</NavLink>
 							</>
 						) : (
 							<>
-								<Link to="/write">
+								<NavLink to="/write">
 									<ButtonBasic>Write</ButtonBasic>
-								</Link>
+								</NavLink>
 								<Menu>
 									<MenuButton
 										variant="unstyled"
@@ -137,12 +137,12 @@ export function Navbar() {
 									</MenuButton>
 									<MenuList>
 										{menuItems.map((item) => (
-											<Link
+											<NavLink
 												key={item.path}
 												to={item.path}
 											>
 												<MenuItem _hover={item._hover}>{item.label}</MenuItem>
-											</Link>
+											</NavLink>
 										))}
 									</MenuList>
 								</Menu>
