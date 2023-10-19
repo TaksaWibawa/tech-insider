@@ -23,14 +23,14 @@ export function GridLayout({ children, templateColumns, ...rest }) {
 		<Container
 			as="section"
 			maxW={"full"}
-			p={0}
+			px={{ base: 4, lg: 12 }}
+			py={0}
 			{...rest}
 		>
 			<Grid
 				templateColumns={templateColumns}
 				minH={"100vh"}
 				gap={6}
-				p={6}
 			>
 				{children}
 			</Grid>
