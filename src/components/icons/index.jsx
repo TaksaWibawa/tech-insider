@@ -3,6 +3,7 @@ import Logo from "../../assets/logo.png";
 import LogoWhite from "../../assets/logo-white.png";
 import SignUp from "../../assets/signup-illustration.png";
 import SignIn from "../../assets/signin-illustration.png";
+import Hero from "../../assets/hero-illustration.png";
 
 export function BaseImage({ ...props }) {
 	return (
@@ -40,6 +41,17 @@ export function SignInImage({ ...props }) {
 		<Image
 			src={SignIn}
 			alt="Sign In"
+			loading="lazy"
+			{...props}
+		/>
+	);
+}
+
+export function HeroImage({ ...props }) {
+	return (
+		<Image
+			src={Hero}
+			alt="Hero Image"
 			loading="lazy"
 			{...props}
 		/>
