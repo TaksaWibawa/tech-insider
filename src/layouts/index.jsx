@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import { Container, Grid } from "@chakra-ui/react";
+import { Container, Grid, Flex } from "@chakra-ui/react";
 import { Navbar } from "../components/navbar";
 import { Footer } from "../components/footer";
 
@@ -18,7 +18,7 @@ export function BaseLayout({ children, ...rest }) {
 	);
 }
 
-export function GridLayout({ children, templateColumns, ...rest }) {
+export function ContainerLayout({ children, ...rest }) {
 	return (
 		<Container
 			as="section"
@@ -27,13 +27,35 @@ export function GridLayout({ children, templateColumns, ...rest }) {
 			py={0}
 			{...rest}
 		>
+			{children}
+		</Container>
+	);
+}
+
+export function GridLayout({ children, ...rest }) {
+	return (
+		<ContainerLayout>
 			<Grid
-				templateColumns={templateColumns}
 				minH={"100vh"}
 				gap={6}
+				{...rest}
 			>
 				{children}
 			</Grid>
-		</Container>
+		</ContainerLayout>
+	);
+}
+
+export function FlexLayout({ children, ...rest }) {
+	return (
+		<ContainerLayout>
+			<Flex
+				minH={"100vh"}
+				gap={6}
+				{...rest}
+			>
+				{children}
+			</Flex>
+		</ContainerLayout>
 	);
 }

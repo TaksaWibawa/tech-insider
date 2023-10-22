@@ -28,7 +28,6 @@ export function ButtonPrimary({ children, ...rest }) {
 		<Button
 			variant={"solid"}
 			colorScheme="blue"
-			bg={"blue.500"}
 			border={"1px solid transparent"}
 			py={5}
 			px={6}
@@ -46,8 +45,6 @@ export function ButtonOutlinePrimary({ children, ...rest }) {
 		<Button
 			variant={"outline"}
 			colorScheme="blue"
-			borderColor={"blue.500"}
-			color={"blue.500"}
 			py={5}
 			px={6}
 			rounded={"md"}
