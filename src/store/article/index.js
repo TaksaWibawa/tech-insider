@@ -4,7 +4,8 @@ const initialState = {
 	isPreview: false,
 	formData: {
 		title: "",
-		thumbnail: "",
+		thumbnail: null,
+		thumbnailName: "",
 		selectedCategories: [],
 		content: "",
 	},
@@ -21,21 +22,12 @@ const articleSlice = createSlice({
 			const payload = action.payload;
 			const formData = state.formData;
 
-			if (
-				payload.selectedCategories &&
-				payload.selectedCategories.length <= 3
-			) {
-				payload.selectedCategories = payload.selectedCategories.map(
-					(category) => category
-				);
-				state.formData = { ...formData, ...payload };
-			} else {
-				state.formData = {
-					...formData,
-					...payload,
-					selectedCategories: [...formData.selectedCategories],
-				};
+			if (payload.thumbnail && payload.thumbnailName) {
+				formData.thumbnail = payload.thumbnail;
+				formData.thumbnailName = payload.thumbnailName;
 			}
+
+			state.formData = { ...formData, ...payload };
 		},
 		publishArticle: (state) => {
 			console.log({ ...state.formData });
