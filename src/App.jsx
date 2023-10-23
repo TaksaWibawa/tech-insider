@@ -4,6 +4,7 @@ import RegisterPage from "./pages/register.page";
 import LoginPage from "./pages/login.page";
 import HomePage from "./pages/home.page";
 import NotFoundPage from "./pages/not-found.page";
+import CreateArticlePage from "./pages/create-article.page";
 
 function App() {
 	return (
@@ -20,6 +21,10 @@ function App() {
 				<Route
 					path="/register"
 					element={<RegisterPage />}
+				/>
+				<Route
+					path="/write"
+					element={<CreateArticlePage />}
 				/>
 				<Route
 					path="*"
