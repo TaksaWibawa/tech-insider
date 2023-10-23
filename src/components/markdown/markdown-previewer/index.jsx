@@ -13,6 +13,7 @@ import ReactMarkdown from "react-markdown";
 import { FlexLayout } from "../../../layouts";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import { dracula } from "react-syntax-highlighter/dist/esm/styles/prism";
+import { useSelector } from "react-redux";
 
 const initialContent = `
 ## Getting Started
@@ -52,43 +53,38 @@ const codeHighlighter = ({ className, children }) => {
 	);
 };
 
-export function MarkdownPreview({
-	authorAvatar,
-	authorName,
-	content,
-	createdAt,
-	selectedCategories,
-	thumbnail,
-	title,
-}) {
+export function MarkdownPreview() {
+	const { title, content, thumbnail, selectedCategories } = useSelector(
+		(state) => state.article.formData
+	);
+
+	const authorAvatar = null;
+	const authorName = null;
+	const createdAt = null;
+
 	return (
 		<FlexLayout
 			as={"article"}
 			flexDir={"column"}
 			justifyContent={"flex-start"}
 		>
-			{/* find the best ratio */}
-			<AspectRatio ratio={4 / 1}>
+			<AspectRatio ratio={16 / 9}>
 				{thumbnail ? (
-					<AspectRatio ratio={4 / 1}>
-						<Image
-							src={URL.createObjectURL(thumbnail)}
-							alt="Thumbnail"
-							objectFit={"cover"}
-						/>
-					</AspectRatio>
+					<Image
+						src={thumbnail}
+						alt="Thumbnail"
+						objectFit={"cover"}
+					/>
 				) : (
-					<AspectRatio ratio={4 / 1}>
-						<Text
-							fontFamily={"sans-serif"}
-							fontSize={"1.5rem"}
-							fontWeight={"bold"}
-							color={"gray.500"}
-							bgColor={"gray.300"}
-						>
-							No Thumbnail
-						</Text>
-					</AspectRatio>
+					<Text
+						fontFamily={"sans-serif"}
+						fontSize={"1.5rem"}
+						fontWeight={"bold"}
+						color={"gray.500"}
+						bgColor={"gray.300"}
+					>
+						No Thumbnail
+					</Text>
 				)}
 			</AspectRatio>
 

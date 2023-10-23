@@ -31,7 +31,7 @@ const inputStyles = {
 	border: "none",
 	boxShadow: "none",
 	lineHeight: "1.5",
-	padding: "20px 0",
+	padding: "30px 0",
 	fontFamily: "sans-serif",
 	letterSpacing: "1px",
 };
@@ -48,14 +48,12 @@ export function ArticleForm({ formData, onFormChange, onSubmit }) {
 	const fileInputRef = useRef(null);
 
 	const handleImageChange = (e) => {
+		e.preventDefault();
 		const file = e.target.files[0];
 
 		if (file) {
-			const reader = new FileReader();
-			reader.onload = (e) => {
-				onFormChange({ thumbnail: e.target.result });
-			};
-			reader.readAsDataURL(file);
+			const imageURL = URL.createObjectURL(file);
+			onFormChange({ thumbnail: imageURL, thumbnailName: file });
 		}
 	};
 

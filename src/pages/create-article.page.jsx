@@ -56,12 +56,7 @@ export default function CreateArticlePage() {
 				</ButtonOutlinePrimary>
 			</ButtonGroup>
 			{isPreview ? (
-				<MarkdownPreview
-					title={formData.title}
-					thumbnail={formData.thumbnail}
-					selectedCategories={formData.selectedCategories}
-					content={formData.content}
-				/>
+				<MarkdownPreview />
 			) : (
 				<ArticleForm
 					formData={formData}
