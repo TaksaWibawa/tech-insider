@@ -40,8 +40,8 @@ export function SignInForm() {
 			onSubmit={handleSubmit(onSubmit)}
 			className="flex flex-col gap-8 w-full"
 		>
-			<FormControl isInvalid={errors.username}>
-				<FormLabel htmlFor="username">Username</FormLabel>
+			<FormControl isInvalid={errors.email}>
+				<FormLabel htmlFor="email">Email</FormLabel>
 				<Input
 					type="text"
 					id="email"
@@ -55,7 +55,7 @@ export function SignInForm() {
 					})}
 				/>
 				<FormErrorMessage>
-					{errors.username && errors.username.message}
+					{errors.email && errors.email.message}
 				</FormErrorMessage>
 			</FormControl>
 

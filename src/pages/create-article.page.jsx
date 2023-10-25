@@ -41,7 +41,6 @@ export default function CreateArticlePage() {
 			flexDir={"column"}
 			justifyContent={"flex-start"}
 			py={10}
-			px={"20px"}
 		>
 			<ButtonGroup
 				display="flex"
@@ -56,12 +55,7 @@ export default function CreateArticlePage() {
 				</ButtonOutlinePrimary>
 			</ButtonGroup>
 			{isPreview ? (
-				<MarkdownPreview
-					title={formData.title}
-					thumbnail={formData.thumbnail}
-					selectedCategories={formData.selectedCategories}
-					content={formData.content}
-				/>
+				<MarkdownPreview />
 			) : (
 				<ArticleForm
 					formData={formData}

@@ -3,8 +3,11 @@ import { ButtonOutlinePrimary, ButtonPrimary } from "../../button";
 import { Center, Heading, Text, Flex, VStack } from "@chakra-ui/react";
 import { GridLayout } from "../../../layouts";
 import { HeroImage } from "../../icons";
+import { useNavigate } from "react-router";
 
 export function HeroSection() {
+	const navigate = useNavigate();
+
 	return (
 		<GridLayout
 			templateColumns={{
@@ -47,8 +50,18 @@ export function HeroSection() {
 					justify={{ base: "center", lg: "flex-start" }}
 					flexDir={{ base: "column", sm: "row" }}
 				>
-					<ButtonPrimary>Write Article</ButtonPrimary>
-					<ButtonOutlinePrimary>Read Article</ButtonOutlinePrimary>
+					<ButtonPrimary
+						onClick={() => navigate("/write")}
+						w={{ base: "full", sm: "auto" }}
+					>
+						Write Article
+					</ButtonPrimary>
+					<ButtonOutlinePrimary
+						onClick={() => navigate("/read")}
+						w={{ base: "full", sm: "auto" }}
+					>
+						Read Article
+					</ButtonOutlinePrimary>
 				</Flex>
 			</VStack>
 
