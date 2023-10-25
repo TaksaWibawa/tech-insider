@@ -15,20 +15,29 @@ import {
 import { authService } from "../../config/auth";
 import { BaseImage } from "../icons";
 import { ButtonBasic, ButtonOutlinePrimary, ButtonPrimary } from "../button";
+import { clearUser, selectUser } from "../../store/user";
 import { menuItems } from "../../constant/menuItems";
 import { MobileNavbar } from "./mobile";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { RiMenu2Line, RiArrowDropDownLine } from "react-icons/ri";
 import { SearchBar } from "../search-bar";
-import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 
 export function Navbar() {
-	const [isAuth, setIsAuth] = useState(false);
 	const { isOpen, onOpen, onClose } = useDisclosure();
+	const { isAuthenticated } = useSelector(selectUser);
+	const dispatch = useDispatch();
+	const navigate = useNavigate();
 
-	useEffect(() => {
-		setIsAuth(authService.isAuthenticated());
-	}, []);
+	const handleLogout = async () => {
+		try {
+			await authService.logOut();
+			dispatch(clearUser());
+			navigate("/");
+		} catch (err) {
+			console.error(err);
+		}
+	};
 
 	return (
 		<Container
@@ -40,12 +49,13 @@ export function Navbar() {
 			px={{ base: 4, lg: 12 }}
 			py={{ base: 5, lg: 7 }}
 			top={0}
-			zIndex={999}
+			zIndex={1}
 		>
 			<MobileNavbar
 				isOpen={isOpen}
 				onClose={onClose}
-				isAuth={isAuth}
+				isAuthenticated={isAuthenticated}
+				onLogout={handleLogout}
 			/>
 
 			<HStack spacing={12}>
@@ -90,7 +100,7 @@ export function Navbar() {
 							<ButtonBasic>Home</ButtonBasic>
 						</NavLink>
 
-						{!isAuth ? (
+						{!isAuthenticated ? (
 							<>
 								<NavLink to="/login">
 									<ButtonOutlinePrimary>Sign In</ButtonOutlinePrimary>
@@ -127,7 +137,9 @@ export function Navbar() {
 											<NavLink
 												key={item.path}
 												to={item.path}
-												onClick={item.onClick}
+												onClick={
+													item.label === "Sign Out" ? handleLogout : null
+												}
 											>
 												<MenuItem _hover={item._hover}>{item.label}</MenuItem>
 											</NavLink>

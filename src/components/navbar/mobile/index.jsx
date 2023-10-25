@@ -19,10 +19,9 @@ import {
 	menuItemsAnonymous,
 } from "../../../constant/menuItems";
 import { NavLink, useLocation } from "react-router-dom";
-import { authService } from "../../../config/auth";
 import { useEffect } from "react";
 
-export function MobileNavbar({ isOpen, onClose, isAuth }) {
+export function MobileNavbar({ isOpen, onClose, isAuthenticated, onLogout }) {
 	const location = useLocation();
 
 	const isPathActive = (path) => {
@@ -33,7 +32,7 @@ export function MobileNavbar({ isOpen, onClose, isAuth }) {
 		return () => {
 			onClose();
 		};
-	}, [location.pathname, onClose]);
+	}, [location.pathname, onClose, isAuthenticated]);
 
 	return (
 		<Drawer
@@ -56,7 +55,7 @@ export function MobileNavbar({ isOpen, onClose, isAuth }) {
 						<Avatar
 							size={"sm"}
 							src={
-								!isAuth
+								!isAuthenticated
 									? "https://bit.ly/broken-link"
 									: "https://bit.ly/dan-abramov"
 							}
@@ -71,7 +70,7 @@ export function MobileNavbar({ isOpen, onClose, isAuth }) {
 								fontSize={"md"}
 								fontWeight={"semibold"}
 							>
-								{isAuth ? "John Doe" : "Guest"}
+								{isAuthenticated ? "John Doe" : "Guest"}
 							</Text>
 						</Flex>
 					</Flex>
@@ -89,7 +88,7 @@ export function MobileNavbar({ isOpen, onClose, isAuth }) {
 					flexDirection={"column"}
 					gap={2}
 				>
-					{!isAuth ? (
+					{!isAuthenticated ? (
 						<>
 							{menuItemsAnonymous.map((item) => (
 								<NavLink
@@ -156,13 +155,13 @@ export function MobileNavbar({ isOpen, onClose, isAuth }) {
 				/>
 
 				<DrawerFooter>
-					{isAuth ? (
+					{isAuthenticated ? (
 						<Button
 							w={"full"}
 							variant="outline"
 							colorScheme="red"
 							_hover={{ bgColor: "red.500", color: "white" }}
-							onClick={authService.logOut()}
+							onClick={onLogout}
 						>
 							Sign Out
 						</Button>
