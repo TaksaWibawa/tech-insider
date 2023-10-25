@@ -1,5 +1,3 @@
-import { authService } from "../config/auth";
-
 export const menuItems = [
 	{
 		label: "Dashboard",
@@ -23,9 +21,6 @@ export const menuItems = [
 		_hover: {
 			bgColor: "red.500",
 			color: "white",
-		},
-		onClick: () => {
-			authService.logOut();
 		},
 	},
 ];

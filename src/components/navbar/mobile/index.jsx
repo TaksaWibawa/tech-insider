@@ -21,7 +21,13 @@ import {
 import { NavLink, useLocation } from "react-router-dom";
 import { useEffect } from "react";
 
-export function MobileNavbar({ isOpen, onClose, isAuthenticated, onLogout }) {
+export function MobileNavbar({
+	isOpen,
+	onClose,
+	isAuthenticated,
+	currentUser,
+	onLogout,
+}) {
 	const location = useLocation();
 
 	const isPathActive = (path) => {
@@ -57,7 +63,7 @@ export function MobileNavbar({ isOpen, onClose, isAuthenticated, onLogout }) {
 							src={
 								!isAuthenticated
 									? "https://bit.ly/broken-link"
-									: "https://bit.ly/dan-abramov"
+									: currentUser?.photoURL
 							}
 						/>
 						<Flex
@@ -70,7 +76,7 @@ export function MobileNavbar({ isOpen, onClose, isAuthenticated, onLogout }) {
 								fontSize={"md"}
 								fontWeight={"semibold"}
 							>
-								{isAuthenticated ? "John Doe" : "Guest"}
+								{isAuthenticated ? currentUser?.displayName : "Guest"}
 							</Text>
 						</Flex>
 					</Flex>

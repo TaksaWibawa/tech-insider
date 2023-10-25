@@ -5,26 +5,30 @@ import {
 	FormLabel,
 	Input,
 } from "@chakra-ui/react";
-import { ButtonPrimary } from "../../button";
 import { APIAuth } from "../../../apis/auth.api";
+import { ButtonPrimary } from "../../button";
+import { setAuthenticated, setUser } from "../../../store/user/manageUser";
+import { useDispatch } from "react-redux";
 import { useForm } from "react-hook-form";
+import { useNavigate } from "react-router";
 
 export function SignInForm() {
 	const {
 		handleSubmit,
 		register,
-		reset,
 		formState: { errors },
 	} = useForm();
 
-	const onSubmit = async (data, e) => {
+	const dispatch = useDispatch();
+	const navigate = useNavigate();
+
+	const onSubmit = async ({ email, password }, e) => {
 		e.preventDefault();
 		try {
-			const { email, password } = data;
-			console.log(email, password);
-			await APIAuth.login({ email, password });
-			reset();
-			window.location.href = "/";
+			const user = await APIAuth.login({ email, password });
+			dispatch(setAuthenticated());
+			dispatch(setUser(user));
+			return navigate("/");
 		} catch (error) {
 			throw new Error(error);
 		}
@@ -38,13 +42,14 @@ export function SignInForm() {
 			<FormControl isInvalid={errors.email}>
 				<FormLabel htmlFor="email">Email</FormLabel>
 				<Input
-					type="email"
+					type="text"
 					id="email"
 					placeholder="Email"
 					{...register("email", {
 						required: "This field is required",
-						minLength: {
-							value: 6,
+						pattern: {
+							value: /\S+@\S+\.\S+/,
+							message: "Please enter a valid email",
 						},
 					})}
 				/>
@@ -63,6 +68,7 @@ export function SignInForm() {
 						required: "This field is required",
 						minLength: {
 							value: 8,
+							message: "Password must be at least 8 characters long",
 						},
 					})}
 				/>

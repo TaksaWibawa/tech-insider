@@ -4,7 +4,7 @@ import Cookies from "js-cookie";
 
 export class AuthService {
 	isAuthenticated() {
-		if (this.getToken()) return true;
+		if (this.getToken() && this.getRefreshToken()) return true;
 		return false;
 	}
 
@@ -20,7 +20,7 @@ export class AuthService {
 	storeCredentialsToCookie({ idToken, refreshToken }) {
 		const expires = new Date(new Date().getTime() + 60 * 60 * 1000);
 		if (idToken) Cookies.set("idToken", idToken, { expires });
-		Cookies.set("refreshToken", refreshToken);
+		if (refreshToken) Cookies.set("refreshToken", refreshToken);
 	}
 
 	clearCredentialsFromCookie() {
@@ -32,9 +32,8 @@ export class AuthService {
 		try {
 			await signOut(auth);
 			this.clearCredentialsFromCookie();
-			window.location.href = "/";
 		} catch (err) {
-			console.error(err);
+			throw new Error(err);
 		}
 	}
 }

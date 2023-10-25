@@ -14,6 +14,7 @@ import { FlexLayout } from "../../../layouts";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import { dracula } from "react-syntax-highlighter/dist/esm/styles/prism";
 import { useSelector } from "react-redux";
+import { currentUser } from "../../../store/user/manageUser";
 
 const initialContent = `
 ## Getting Started
@@ -57,10 +58,7 @@ export function MarkdownPreview() {
 	const { title, content, thumbnail, selectedCategories } = useSelector(
 		(state) => state.article.formData
 	);
-
-	const authorAvatar = null;
-	const authorName = null;
-	const createdAt = null;
+	const user = useSelector(currentUser);
 
 	return (
 		<FlexLayout
@@ -126,11 +124,7 @@ export function MarkdownPreview() {
 
 			<HStack>
 				<Image
-					src={
-						authorAvatar
-							? authorAvatar
-							: "https://avatars.githubusercontent.com/u/98959851?s=96&v=4"
-					}
+					src={user?.photoURL ? user.photoURL : "https://bit.ly/dan-abramov"}
 					alt="Profile"
 					w={10}
 					h={10}
@@ -146,15 +140,14 @@ export function MarkdownPreview() {
 						fontSize={"sm"}
 						fontWeight={"semibold"}
 					>
-						{authorName ? authorName : "Taksa Wibawa"}
+						{user?.displayName ? user.displayName : "Dan Abramov"}
 					</Text>
 					<Text
 						fontFamily={"sans-serif"}
 						fontSize={"xs"}
 						color={"gray.500"}
 					>
-						{createdAt ? createdAt : new Date().toLocaleDateString()} - 5 min
-						read
+						{new Date().toLocaleDateString()} - 5 min read
 					</Text>
 				</VStack>
 			</HStack>
