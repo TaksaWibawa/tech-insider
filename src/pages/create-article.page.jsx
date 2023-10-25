@@ -41,7 +41,6 @@ export default function CreateArticlePage() {
 			flexDir={"column"}
 			justifyContent={"flex-start"}
 			py={10}
-			px={"20px"}
 		>
 			<ButtonGroup
 				display="flex"

@@ -1,6 +1,14 @@
 /* eslint-disable react/no-unescaped-entities */
 import { GridLayout } from "../layouts";
-import { Box, Button, GridItem, Heading, Text, VStack } from "@chakra-ui/react";
+import {
+	AspectRatio,
+	Box,
+	Button,
+	GridItem,
+	Heading,
+	Text,
+	VStack,
+} from "@chakra-ui/react";
 import { NavLink } from "react-router-dom";
 import { SignInForm } from "../components/form/signin";
 import { SignInImage } from "../components/icons";
@@ -17,6 +25,7 @@ export default function LoginPage() {
 			<GridItem
 				colSpan={1}
 				py={10}
+				margin={"auto"}
 			>
 				<VStack spacing={5}>
 					<Heading
@@ -35,7 +44,7 @@ export default function LoginPage() {
 					<SignInForm />
 					<Text fontSize={{ base: "xs", lg: "md" }}>
 						Don't have an account?
-						<NavLink to="/login">
+						<NavLink to="/register">
 							<Button
 								color="blue.500"
 								variant="link"
@@ -57,12 +66,17 @@ export default function LoginPage() {
 				py={10}
 				pl={{ base: 0, xl: 20 }}
 			>
-				<Box>
-					<SignInImage
-						w={"full"}
-						h={"auto"}
-					/>
-				</Box>
+				<AspectRatio
+					ratio={1 / 1}
+					w={"full"}
+				>
+					<Box>
+						<SignInImage
+							w={"full"}
+							h={"auto"}
+						/>
+					</Box>
+				</AspectRatio>
 			</GridItem>
 		</GridLayout>
 	);
