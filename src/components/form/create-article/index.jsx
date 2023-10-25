@@ -14,6 +14,8 @@ import { useForm, Controller } from "react-hook-form";
 import { useRef } from "react";
 import Select from "react-select";
 import { RiFile2Fill } from "react-icons/ri";
+import { useDispatch } from "react-redux";
+import { resetArticleData } from "../../../store/article";
 
 const availableCategories = [
 	{ value: "Computer", label: "Computer" },
@@ -41,11 +43,14 @@ export function ArticleForm({ formData, onFormChange, onSubmit }) {
 		control,
 		handleSubmit,
 		formState: { errors },
+		setValue,
+		reset,
 	} = useForm({
 		mode: "onSubmit",
 	});
 
 	const fileInputRef = useRef(null);
+	const dispatch = useDispatch();
 
 	const handleImageChange = (e) => {
 		e.preventDefault();
@@ -53,7 +58,8 @@ export function ArticleForm({ formData, onFormChange, onSubmit }) {
 
 		if (file) {
 			const imageURL = URL.createObjectURL(file);
-			onFormChange({ thumbnail: imageURL, thumbnailName: file });
+			onFormChange({ thumbnail: imageURL, thumbnailName: file.name });
+			setValue("thumbnail", file);
 		}
 	};
 
@@ -70,9 +76,15 @@ export function ArticleForm({ formData, onFormChange, onSubmit }) {
 		}
 	};
 
+	const submitForm = (data) => {
+		onSubmit(data);
+		reset();
+		dispatch(resetArticleData());
+	};
+
 	return (
 		<form
-			onSubmit={handleSubmit(onSubmit)}
+			onSubmit={handleSubmit(submitForm)}
 			style={{
 				display: "flex",
 				flexDirection: "column",
@@ -154,7 +166,9 @@ export function ArticleForm({ formData, onFormChange, onSubmit }) {
 									fontSize={"18px"}
 									fontWeight={"semibold"}
 									height={"auto"}
-									placeholder="Upload your thumbnail here..."
+									placeholder={
+										formData.thumbnailName || "Upload your thumbnail..."
+									}
 									_placeholder={
 										errors.thumbnail
 											? { color: "red.300" }
@@ -169,7 +183,7 @@ export function ArticleForm({ formData, onFormChange, onSubmit }) {
 									accept="image/*"
 									style={{ display: "none" }}
 									ref={fileInputRef}
-									onChange={handleImageChange}
+									onInput={handleImageChange}
 								/>
 							</InputGroup>
 						)}

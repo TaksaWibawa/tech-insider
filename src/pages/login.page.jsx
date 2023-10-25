@@ -15,69 +15,71 @@ import { SignInImage } from "../components/icons";
 
 export default function LoginPage() {
 	return (
-		<GridLayout
-			templateColumns={{
-				base: "1fr",
-				lg: "1fr 1fr",
-				xl: "1fr 1fr 0.5fr",
-			}}
-		>
-			<GridItem
-				colSpan={1}
-				py={10}
-				margin={"auto"}
+		<>
+			<GridLayout
+				templateColumns={{
+					base: "1fr",
+					lg: "1fr 1fr",
+					xl: "1fr 1fr 0.5fr",
+				}}
 			>
-				<VStack spacing={5}>
-					<Heading
-						as="h1"
-						size={"2xl"}
-					>
-						Welcome Back
-					</Heading>
-					<Text
-						textAlign={{ base: "center", lg: "left" }}
-						fontSize={{ base: "md", lg: "lg" }}
-						color={"#888888"}
-					>
-						Please input your data below to continue using our blog.
-					</Text>
-					<SignInForm />
-					<Text fontSize={{ base: "xs", lg: "md" }}>
-						Don't have an account?
-						<NavLink to="/register">
-							<Button
-								color="blue.500"
-								variant="link"
-								fontSize={{ base: "xs", lg: "md" }}
-								ml={1}
-							>
-								Sign Up
-							</Button>
-						</NavLink>
-					</Text>
-				</VStack>
-			</GridItem>
-			<GridItem
-				colSpan={{ base: 1, lg: 1, xl: 2 }}
-				w={"full"}
-				h={"full"}
-				display={{ base: "none", lg: "flex" }}
-				justifyContent={"center"}
-				py={10}
-				pl={{ base: 0, xl: 20 }}
-			>
-				<AspectRatio
-					ratio={1 / 1}
-					w={"full"}
+				<GridItem
+					colSpan={1}
+					py={10}
+					margin={"auto"}
 				>
-					<Box>
-						<SignInImage
-							w={"full"}
-							h={"auto"}
-						/>
-					</Box>
-				</AspectRatio>
-			</GridItem>
-		</GridLayout>
+					<VStack spacing={5}>
+						<Heading
+							as="h1"
+							size={"2xl"}
+						>
+							Welcome Back
+						</Heading>
+						<Text
+							textAlign={{ base: "center", lg: "left" }}
+							fontSize={{ base: "md", lg: "lg" }}
+							color={"#888888"}
+						>
+							Please input your data below to continue using our blog.
+						</Text>
+						<SignInForm />
+						<Text fontSize={{ base: "xs", lg: "md" }}>
+							Don't have an account?
+							<NavLink to="/register">
+								<Button
+									color="blue.500"
+									variant="link"
+									fontSize={{ base: "xs", lg: "md" }}
+									ml={1}
+								>
+									Sign Up
+								</Button>
+							</NavLink>
+						</Text>
+					</VStack>
+				</GridItem>
+				<GridItem
+					colSpan={{ base: 1, lg: 1, xl: 2 }}
+					w={"full"}
+					h={"full"}
+					display={{ base: "none", lg: "flex" }}
+					justifyContent={"center"}
+					py={10}
+					pl={{ base: 0, xl: 20 }}
+				>
+					<AspectRatio
+						ratio={1 / 1}
+						w={"full"}
+					>
+						<Box>
+							<SignInImage
+								w={"full"}
+								h={"auto"}
+							/>
+						</Box>
+					</AspectRatio>
+				</GridItem>
+			</GridLayout>
+		</>
 	);
 }

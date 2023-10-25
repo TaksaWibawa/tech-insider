@@ -11,18 +11,34 @@ import {
 } from "@chakra-ui/react";
 import { useForm } from "react-hook-form";
 import { ButtonPrimary } from "../../button";
+import { useDispatch } from "react-redux";
+import { createAccount } from "../../../store/user/createAccount";
+import { useNavigate } from "react-router";
 
 export function SignUpForm() {
 	const {
 		handleSubmit,
 		register,
 		reset,
+		watch,
 		formState: { errors },
 	} = useForm();
 
-	function onSubmit(data) {
-		console.log(data);
-		reset();
+	const dispatch = useDispatch();
+	const navigate = useNavigate();
+
+	function onSubmit(data, e) {
+		const { firstName, lastName, username, email, password } = data;
+		try {
+			dispatch(
+				createAccount({ firstName, lastName, username, email, password })
+			);
+			reset();
+			navigate("/login");
+		} catch (error) {
+			e.preventDefault();
+			throw new Error(error);
+		}
 	}
 
 	return (
@@ -43,7 +59,8 @@ export function SignUpForm() {
 						{...register("firstName", {
 							required: "This field is required",
 							minLength: {
-								value: 2,
+								value: 6,
+								message: "First name must be at least 6 characters",
 							},
 						})}
 					/>
@@ -61,7 +78,8 @@ export function SignUpForm() {
 						{...register("lastName", {
 							required: "This field is required",
 							minLength: {
-								value: 2,
+								value: 6,
+								message: "Last name must be at least 6 characters",
 							},
 						})}
 					/>
@@ -81,6 +99,11 @@ export function SignUpForm() {
 						required: "This field is required",
 						minLength: {
 							value: 6,
+							message: "Username must be at least 6 characters",
+						},
+						maxLength: {
+							value: 16,
+							message: "Username must be at most 16 characters",
 						},
 					})}
 				/>
@@ -118,6 +141,7 @@ export function SignUpForm() {
 						required: "This field is required",
 						minLength: {
 							value: 8,
+							message: "Password must be at least 8 characters",
 						},
 					})}
 				/>
@@ -134,9 +158,10 @@ export function SignUpForm() {
 					placeholder="Confirm Password"
 					{...register("confirmPassword", {
 						required: "This field is required",
-						minLength: {
-							value: 8,
-							message: "Password must be at least 8 characters",
+						validate: (value) => {
+							if (value !== watch("password")) {
+								return "Passwords do not match";
+							}
 						},
 					})}
 				/>
@@ -155,7 +180,6 @@ export function SignUpForm() {
 					/>
 					<Button
 						onClick={(e) => e.preventDefault()}
-						as="a"
 						color={errors.terms ? "red.500" : "blue.500"}
 						variant="link"
 						fontSize={{ base: "xs", lg: "md" }}

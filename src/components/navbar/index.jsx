@@ -3,31 +3,45 @@ import {
 	Button,
 	ButtonGroup,
 	Container,
+	Divider,
 	Flex,
+	Heading,
 	HStack,
 	Icon,
 	Menu,
 	MenuButton,
 	MenuItem,
 	MenuList,
+	Text,
 	useDisclosure,
 } from "@chakra-ui/react";
 import { authService } from "../../config/auth";
 import { BaseImage } from "../icons";
 import { ButtonBasic, ButtonOutlinePrimary, ButtonPrimary } from "../button";
-import { clearUser, selectUser } from "../../store/user";
+import {
+	clearUser,
+	currentUser,
+	userStatus,
+} from "../../store/user/manageUser";
 import { menuItems } from "../../constant/menuItems";
 import { MobileNavbar } from "./mobile";
-import { NavLink, useNavigate } from "react-router-dom";
-import { RiMenu2Line, RiArrowDropDownLine } from "react-icons/ri";
+import { NavLink, useLocation, useNavigate } from "react-router-dom";
+import { RiMenu2Line } from "react-icons/ri";
 import { SearchBar } from "../search-bar";
 import { useDispatch, useSelector } from "react-redux";
 
 export function Navbar() {
-	const { isOpen, onOpen, onClose } = useDisclosure();
-	const { isAuthenticated } = useSelector(selectUser);
 	const dispatch = useDispatch();
+	const location = useLocation();
 	const navigate = useNavigate();
+	const { isOpen, onOpen, onClose } = useDisclosure();
+
+	const isAuthenticated = useSelector(userStatus);
+	const user = useSelector(currentUser);
+
+	const isPathActive = (path) => {
+		return location.pathname === path;
+	};
 
 	const handleLogout = async () => {
 		try {
@@ -49,12 +63,13 @@ export function Navbar() {
 			px={{ base: 4, lg: 12 }}
 			py={{ base: 5, lg: 7 }}
 			top={0}
-			zIndex={1}
+			zIndex={1000}
 		>
 			<MobileNavbar
 				isOpen={isOpen}
 				onClose={onClose}
 				isAuthenticated={isAuthenticated}
+				currentUser={user}
 				onLogout={handleLogout}
 			/>
 
@@ -83,10 +98,12 @@ export function Navbar() {
 							<RiMenu2Line />
 						</Icon>
 					</Button>
-					<BaseImage
-						w={{ base: "100px", md: "110px", lg: "140px" }}
-						h={"auto"}
-					/>
+					<NavLink to="/">
+						<BaseImage
+							w={{ base: "100px", md: "110px", lg: "140px" }}
+							h={"auto"}
+						/>
+					</NavLink>
 					<SearchBar display={{ base: "none", md: "block" }} />
 				</Flex>
 
@@ -95,9 +112,17 @@ export function Navbar() {
 					align={"center"}
 					display={{ base: "none", md: "flex" }}
 				>
-					<ButtonGroup gap={2}>
+					<ButtonGroup gap={3}>
 						<NavLink to="/">
-							<ButtonBasic>Home</ButtonBasic>
+							<ButtonBasic
+								isActive={isPathActive("/") ? true : false}
+								_active={{
+									color: "white",
+									bgColor: "blue.500",
+								}}
+							>
+								Home
+							</ButtonBasic>
 						</NavLink>
 
 						{!isAuthenticated ? (
@@ -112,27 +137,63 @@ export function Navbar() {
 						) : (
 							<>
 								<NavLink to="/write">
-									<ButtonBasic>Write</ButtonBasic>
+									<ButtonBasic
+										isActive={isPathActive("/write") ? true : false}
+										_active={{
+											color: "white",
+											bgColor: "blue.500",
+										}}
+									>
+										Write
+									</ButtonBasic>
 								</NavLink>
-								<Menu>
+
+								<Divider
+									orientation="vertical"
+									bg={"transparent"}
+									mx={3}
+								/>
+
+								<Menu isLazy>
 									<MenuButton
-										variant="unstyled"
+										as={Button}
 										px={4}
+										variant="unstyled"
+										padding={0}
 									>
 										<Avatar
-											size={"sm"}
-											src="https://bit.ly/dan-abramov"
+											size={"md"}
+											position={"absolute"}
+											src={user?.photoURL || "bit.ly/dan-abramov"}
+											top={-1}
+											left={0}
 										/>
-										<Icon
-											boxSize={7}
-											pos={"relative"}
-											top={"0.55rem"}
-											left={"0rem"}
-										>
-											<RiArrowDropDownLine />
-										</Icon>
 									</MenuButton>
-									<MenuList>
+									<MenuList
+										fontSize={"md"}
+										fontWeight={"semibold"}
+										color={"gray.500"}
+										borderRadius={"lg"}
+									>
+										<Heading
+											fontSize={"xl"}
+											fontWeight={"bold"}
+											letterSpacing={"wide"}
+											color={"gray.700"}
+											p={3}
+										>
+											{user?.displayName || "Guest"}
+
+											<Text
+												fontSize={"sm"}
+												fontWeight={"normal"}
+												color={"gray.500"}
+												mt={1}
+											>
+												{user?.email || ""}
+											</Text>
+										</Heading>
+
 										{menuItems.map((item) => (
 											<NavLink
 												key={item.path}

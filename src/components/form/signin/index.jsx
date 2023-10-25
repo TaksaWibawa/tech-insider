@@ -7,7 +7,7 @@ import {
 } from "@chakra-ui/react";
 import { APIAuth } from "../../../apis/auth.api";
 import { ButtonPrimary } from "../../button";
-import { setAuthenticated, setUser } from "../../../store/user";
+import { setAuthenticated, setUser } from "../../../store/user/manageUser";
 import { useDispatch } from "react-redux";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router";
@@ -22,14 +22,13 @@ export function SignInForm() {
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
 
-	const onSubmit = async (data, e) => {
+	const onSubmit = async ({ email, password }, e) => {
 		e.preventDefault();
 		try {
-			const { email, password } = data;
 			const user = await APIAuth.login({ email, password });
 			dispatch(setAuthenticated());
 			dispatch(setUser(user));
-			navigate("/");
+			return navigate("/");
 		} catch (error) {
 			throw new Error(error);
 		}

@@ -1,10 +1,12 @@
 import { configureStore } from "@reduxjs/toolkit";
+import { createAccountReducer } from "./user/createAccount";
 import articleReducer from "./article";
-import userReducer from "./user";
+import manageUserReducer from "./user/manageUser";
 
 export const store = configureStore({
 	reducer: {
 		article: articleReducer,
-		user: userReducer,
+		createAccount: createAccountReducer,
+		manageUser: manageUserReducer,
 	},
 });
