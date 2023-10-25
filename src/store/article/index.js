@@ -53,4 +53,5 @@ export const {
 	publishArticle,
 	resetArticleData,
 } = articleSlice.actions;
+
 export default articleSlice.reducer;
