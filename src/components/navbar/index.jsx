@@ -113,18 +113,6 @@ export function Navbar() {
 					display={{ base: "none", md: "flex" }}
 				>
 					<ButtonGroup gap={3}>
-						<NavLink to="/">
-							<ButtonBasic
-								isActive={isPathActive("/") ? true : false}
-								_active={{
-									color: "white",
-									bgColor: "blue.500",
-								}}
-							>
-								Home
-							</ButtonBasic>
-						</NavLink>
-
 						{!isAuthenticated ? (
 							<>
 								<NavLink to="/login">
@@ -136,6 +124,17 @@ export function Navbar() {
 							</>
 						) : (
 							<>
+								<NavLink to="/">
+									<ButtonBasic
+										isActive={isPathActive("/") ? true : false}
+										_active={{
+											color: "white",
+											bgColor: "blue.500",
+										}}
+									>
+										Home
+									</ButtonBasic>
+								</NavLink>
 								<NavLink to="/write">
 									<ButtonBasic
 										isActive={isPathActive("/write") ? true : false}

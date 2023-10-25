@@ -54,14 +54,6 @@ export const menuItemsMobile = [
 
 export const menuItemsAnonymous = [
 	{
-		label: "Home",
-		path: "/",
-		_hover: {
-			bgColor: "gray.200",
-			color: "gray.800",
-		},
-	},
-	{
 		label: "Sign In",
 		path: "/login",
 		_hover: {
