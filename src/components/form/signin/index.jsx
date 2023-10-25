@@ -5,8 +5,9 @@ import {
 	FormLabel,
 	Input,
 } from "@chakra-ui/react";
-import { useForm } from "react-hook-form";
 import { ButtonPrimary } from "../../button";
+import { APIAuth } from "../../../apis/auth.api";
+import { useForm } from "react-hook-form";
 
 export function SignInForm() {
 	const {
@@ -16,23 +17,31 @@ export function SignInForm() {
 		formState: { errors },
 	} = useForm();
 
-	function onSubmit(data) {
-		console.log(data);
-		reset();
-	}
+	const onSubmit = async (data, e) => {
+		e.preventDefault();
+		try {
+			const { email, password } = data;
+			console.log(email, password);
+			await APIAuth.login({ email, password });
+			reset();
+			window.location.href = "/";
+		} catch (error) {
+			throw new Error(error);
+		}
+	};
 
 	return (
 		<form
 			onSubmit={handleSubmit(onSubmit)}
 			className="flex flex-col gap-8 w-full"
 		>
-			<FormControl isInvalid={errors.username}>
-				<FormLabel htmlFor="username">Username</FormLabel>
+			<FormControl isInvalid={errors.email}>
+				<FormLabel htmlFor="email">Email</FormLabel>
 				<Input
-					type="text"
-					id="username"
-					placeholder="Username"
-					{...register("username", {
+					type="email"
+					id="email"
+					placeholder="Email"
+					{...register("email", {
 						required: "This field is required",
 						minLength: {
 							value: 6,
@@ -40,7 +49,7 @@ export function SignInForm() {
 					})}
 				/>
 				<FormErrorMessage>
-					{errors.username && errors.username.message}
+					{errors.email && errors.email.message}
 				</FormErrorMessage>
 			</FormControl>
 

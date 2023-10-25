@@ -38,6 +38,7 @@ export function GridLayout({ children, ...rest }) {
 			<Grid
 				minH={"100vh"}
 				gap={6}
+				px={"20px"}
 				{...rest}
 			>
 				{children}
@@ -52,6 +53,7 @@ export function FlexLayout({ children, ...rest }) {
 			<Flex
 				minH={"100vh"}
 				gap={6}
+				px={"20px"}
 				{...rest}
 			>
 				{children}

@@ -58,7 +58,7 @@ export default function RegisterPage() {
 				py={10}
 				pl={{ base: 0, xl: 20 }}
 			>
-				<Box>
+				<Box w={"full"}>
 					<SignUpImage
 						w={"full"}
 						h={"auto"}

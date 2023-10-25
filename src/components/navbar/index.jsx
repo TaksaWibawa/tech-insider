@@ -10,62 +10,50 @@ import {
 	MenuButton,
 	MenuItem,
 	MenuList,
+	useDisclosure,
 } from "@chakra-ui/react";
+import { authService } from "../../config/auth";
 import { BaseImage } from "../icons";
 import { ButtonBasic, ButtonOutlinePrimary, ButtonPrimary } from "../button";
+import { menuItems } from "../../constant/menuItems";
+import { MobileNavbar } from "./mobile";
+import { NavLink } from "react-router-dom";
 import { RiMenu2Line, RiArrowDropDownLine } from "react-icons/ri";
 import { SearchBar } from "../search-bar";
-import { NavLink } from "react-router-dom";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export function Navbar() {
-	const [isAuth, setIsAuth] = useState(false); // temporary
+	const [isAuth, setIsAuth] = useState(false);
+	const { isOpen, onOpen, onClose } = useDisclosure();
 
-	const menuItems = [
-		{
-			label: "Dashboard",
-			path: "/dashboard",
-			_hover: {
-				bgColor: "gray.100",
-				color: "gray.800",
-			},
-		},
-		{
-			label: "Profile",
-			path: "/dashboard/profile",
-			_hover: {
-				bgColor: "gray.100",
-				color: "gray.800",
-			},
-		},
-		{
-			label: "Sign Out",
-			path: "/logout",
-			_hover: {
-				bgColor: "red.500",
-				color: "white",
-			},
-		},
-	];
+	useEffect(() => {
+		setIsAuth(authService.isAuthenticated());
+	}, []);
 
 	return (
 		<Container
 			as="nav"
-			maxW={"100%"}
 			bg={"white"}
 			borderBottom={"1px solid #E0E0E0"}
+			maxW={"100%"}
 			pos={"sticky"}
-			py={{ base: 5, lg: 7 }}
 			px={{ base: 4, lg: 12 }}
+			py={{ base: 5, lg: 7 }}
 			top={0}
 			zIndex={999}
 		>
+			<MobileNavbar
+				isOpen={isOpen}
+				onClose={onClose}
+				isAuth={isAuth}
+			/>
+
 			<HStack spacing={12}>
 				<Flex
-					justifyContent={{ base: "space-between", lg: "flex-start" }}
-					gap={20}
 					align={"center"}
 					flex={{ base: "1 1 100%", lg: "1 1 50%" }}
+					gap={20}
+					justifyContent={{ base: "space-between", lg: "flex-start" }}
 					px={{ base: 2, md: 0 }}
 				>
 					<Button
@@ -80,6 +68,7 @@ export function Navbar() {
 							pos={"relative"}
 							top={"0.20rem"}
 							left={"0.20rem"}
+							onClick={onOpen}
 						>
 							<RiMenu2Line />
 						</Icon>
@@ -104,9 +93,7 @@ export function Navbar() {
 						{!isAuth ? (
 							<>
 								<NavLink to="/login">
-									<ButtonOutlinePrimary onClick={() => setIsAuth(!isAuth)}>
-										Sign In
-									</ButtonOutlinePrimary>
+									<ButtonOutlinePrimary>Sign In</ButtonOutlinePrimary>
 								</NavLink>
 								<NavLink to="/register">
 									<ButtonPrimary>Sign Up</ButtonPrimary>
@@ -140,6 +127,7 @@ export function Navbar() {
 											<NavLink
 												key={item.path}
 												to={item.path}
+												onClick={item.onClick}
 											>
 												<MenuItem _hover={item._hover}>{item.label}</MenuItem>
 											</NavLink>
