@@ -5,6 +5,8 @@ import LoginPage from "./pages/login.page";
 import HomePage from "./pages/home.page";
 import NotFoundPage from "./pages/not-found.page";
 import CreateArticlePage from "./pages/create-article.page";
+import { PrivateRoute } from "./routes/private-route";
+import { ProtectedRoute } from "./routes/protected-route";
 
 function App() {
 	return (
@@ -14,18 +16,31 @@ function App() {
 					path="/"
 					element={<HomePage />}
 				/>
+
 				<Route
-					path="/login"
-					element={<LoginPage />}
-				/>
+					path="/"
+					element={<PrivateRoute />}
+				>
+					<Route
+						path="/write"
+						element={<CreateArticlePage />}
+					/>
+				</Route>
+
 				<Route
-					path="/register"
-					element={<RegisterPage />}
-				/>
-				<Route
-					path="/write"
-					element={<CreateArticlePage />}
-				/>
+					path="/"
+					element={<ProtectedRoute />}
+				>
+					<Route
+						path="/login"
+						element={<LoginPage />}
+					/>
+					<Route
+						path="/register"
+						element={<RegisterPage />}
+					/>
+				</Route>
+
 				<Route
 					path="*"
 					element={<NotFoundPage />}
