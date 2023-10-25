@@ -1,9 +1,9 @@
 import { Image } from "@chakra-ui/react";
+import Hero from "../../assets/hero-illustration.png";
 import Logo from "../../assets/logo.png";
 import LogoWhite from "../../assets/logo-white.png";
-import SignUp from "../../assets/signup-illustration.png";
 import SignIn from "../../assets/signin-illustration.png";
-import Hero from "../../assets/hero-illustration.png";
+import SignUp from "../../assets/signup-illustration.png";
 
 export function BaseImage({ ...props }) {
 	return (
