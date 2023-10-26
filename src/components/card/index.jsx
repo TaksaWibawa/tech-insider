@@ -1,5 +1,6 @@
 /* eslint-disable react/prop-types */
 import {
+	AspectRatio,
 	Avatar,
 	Button,
 	Card,
@@ -15,15 +16,11 @@ import {
 } from "@chakra-ui/react";
 import { Link } from "react-router-dom";
 
-export function ArticleCard({
-	articleData,
-	articleId,
-	categories,
-	content,
-	date,
-	thumbnail,
-	title,
-}) {
+export function ArticleCard({ articleData }) {
+	const { id, author, categories, content, created, thumbnailUrl, title } =
+		articleData;
+	const { photoURL, displayName } = author;
+
 	return (
 		<Card>
 			<CardHeader
@@ -33,11 +30,13 @@ export function ArticleCard({
 				justifyContent="space-between"
 				gap={3}
 			>
-				<Image
-					src={thumbnail}
-					alt="Green double couch with wooden legs"
-					borderRadius="lg"
-				/>
+				<AspectRatio ratio={16 / 9}>
+					<Image
+						src={thumbnailUrl || "https://bit.ly/sage-adebayo"}
+						alt={title || "No title"}
+						style={{ objectFit: "contain" }}
+					/>
+				</AspectRatio>
 				<Flex
 					direction="row"
 					flexWrap="wrap"
@@ -45,7 +44,7 @@ export function ArticleCard({
 					alignItems="center"
 					gap={2}
 				>
-					{categories.map((category) => (
+					{categories?.map((category) => (
 						<Square
 							key={category}
 							border={"1px solid #000000CC"}
@@ -56,7 +55,7 @@ export function ArticleCard({
 								fontSize={"xs"}
 								fontWeight={"semibold"}
 							>
-								{category}
+								{category || "No category"}
 							</Text>
 						</Square>
 					))}
@@ -66,16 +65,20 @@ export function ArticleCard({
 					fontSize={"2xl"}
 					lineHeight={"1.5"}
 				>
-					{title}
+					{title || "No title"}
 				</Heading>
 			</CardHeader>
-			<CardBody py={0}>
+			<CardBody
+				py={0}
+				overflow={"hidden"}
+			>
 				<Text
 					fontSize={"sm"}
 					color={"#0000007C"}
 					lineHeight={"1.5"}
+					noOfLines={4}
 				>
-					{content}
+					{content || "No content"}
 				</Text>
 			</CardBody>
 			<CardFooter
@@ -84,8 +87,8 @@ export function ArticleCard({
 			>
 				<Avatar
 					size="sm"
-					name="Dan Abrahmov"
-					src={articleData.avatar}
+					name={displayName}
+					src={photoURL || "bit.ly/dan-abramov"}
 				/>
 				<VStack
 					alignItems={"flex-start"}
@@ -98,17 +101,17 @@ export function ArticleCard({
 						color={"#000000CC"}
 						fontWeight={"semibold"}
 					>
-						{articleData.name}
+						{displayName || "No name"}
 					</Text>
 					<Text
 						fontSize={"0.625rem"}
 						color={"#000000CC"}
 					>
-						{date}
+						{created || "No date"}
 					</Text>
 				</VStack>
 				<Link
-					to={`/articles/${articleId}`}
+					to={`/read/article/${id}`}
 					style={{ marginLeft: "auto" }}
 				>
 					<Button

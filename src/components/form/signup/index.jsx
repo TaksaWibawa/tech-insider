@@ -12,7 +12,7 @@ import {
 import { useForm } from "react-hook-form";
 import { ButtonPrimary } from "../../button";
 import { useDispatch } from "react-redux";
-import { createAccount } from "../../../store/user/createAccount";
+import { createAccount } from "../../../store/users/createAccount";
 import { useNavigate } from "react-router";
 
 export function SignUpForm() {

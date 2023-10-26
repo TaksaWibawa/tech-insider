@@ -10,11 +10,13 @@ const initialState = {
 		firstName: "",
 		lastName: "",
 		photoURL: "",
+		age: null,
+		bio: "",
 	},
 };
 
-const userSlice = createSlice({
-	name: "user",
+const manageUserSlice = createSlice({
+	name: "manageUser",
 	initialState,
 	reducers: {
 		setAuthenticated: (state) => {
@@ -22,14 +24,17 @@ const userSlice = createSlice({
 		},
 
 		setUser: (state, action) => {
-			const { uid, email, displayName, photoURL } = action.payload;
+			const data = action.payload;
 			if (state.isAuthenticated) {
 				state.user = {
-					...state.user,
-					uid,
-					email,
-					displayName,
-					photoURL,
+					uid: data.uid,
+					email: data.email,
+					displayName: data.displayName,
+					firstName: data.firstName,
+					lastName: data.lastName,
+					photoURL: data.photoURL,
+					age: data.age,
+					bio: data.bio,
 				};
 			}
 		},
@@ -41,7 +46,9 @@ const userSlice = createSlice({
 	},
 });
 
-export const { setAuthenticated, setUser, clearUser } = userSlice.actions;
-export const selectUser = (state) => state.user;
+export const { setAuthenticated, setUser, clearUser } = manageUserSlice.actions;
 
-export default userSlice.reducer;
+export const userStatus = (state) => state.manageUser.isAuthenticated;
+export const currentUser = (state) => state.manageUser.user;
+
+export default manageUserSlice.reducer;

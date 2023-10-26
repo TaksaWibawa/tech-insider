@@ -10,12 +10,12 @@ import {
 import { ButtonPrimary } from "../../button";
 import { ErrorTooltip } from "../../tooltip";
 import { MarkdownEditor } from "../../markdown/markdown-editor";
+import { resetArticleData } from "../../../store/articles/previewArticle";
+import { RiFile2Fill } from "react-icons/ri";
+import { useDispatch } from "react-redux";
 import { useForm, Controller } from "react-hook-form";
 import { useRef } from "react";
 import Select from "react-select";
-import { RiFile2Fill } from "react-icons/ri";
-import { useDispatch } from "react-redux";
-import { resetArticleData } from "../../../store/article";
 
 const availableCategories = [
 	{ value: "Computer", label: "Computer" },
@@ -72,7 +72,7 @@ export function ArticleForm({ formData, onFormChange, onSubmit }) {
 			// add error handling in the ui later on
 			console.log("Categories must be less than 3");
 		} else {
-			onFormChange({ selectedCategories: values });
+			onFormChange({ categories: values.map((value) => value.value) });
 		}
 	};
 
