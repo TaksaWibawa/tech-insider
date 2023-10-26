@@ -22,7 +22,7 @@ import {
 	clearUser,
 	currentUser,
 	userStatus,
-} from "../../store/user/manageUser";
+} from "../../store/users/manageUser";
 import { menuItems } from "../../constant/menuItems";
 import { MobileNavbar } from "./mobile";
 import { NavLink, useLocation, useNavigate } from "react-router-dom";

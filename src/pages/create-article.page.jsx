@@ -2,20 +2,27 @@ import { ArticleForm } from "../components/form/create-article";
 import { ButtonGroup } from "@chakra-ui/react";
 import { ButtonOutlinePrimary } from "../components/button";
 import { FlexLayout } from "../layouts";
-import { MarkdownPreview } from "../components/markdown/markdown-previewer";
 import { useDispatch, useSelector } from "react-redux";
 import {
 	publishArticle,
 	resetArticleData,
+	selectPreviewArticle,
 	togglePreview,
 	updateArticleData,
-} from "../store/article";
+} from "../store/articles/previewArticle";
 import { useEffect } from "react";
+import { PreviewSection } from "../components/section/preview-section";
+import { currentUser } from "../store/users/manageUser";
 
 export default function CreateArticlePage() {
-	const isPreview = useSelector((state) => state.article.isPreview);
-	const formData = useSelector((state) => state.article.formData);
 	const dispatch = useDispatch();
+	const { isPreview, formData } = useSelector(selectPreviewArticle);
+	const user = useSelector(currentUser);
+
+	const data = {
+		author: user,
+		...formData,
+	};
 
 	useEffect(() => {
 		return () => {
@@ -27,12 +34,12 @@ export default function CreateArticlePage() {
 		dispatch(togglePreview());
 	};
 
-	const handleSubmit = () => {
-		dispatch(publishArticle());
-	};
-
 	const handleChange = (formData) => {
 		dispatch(updateArticleData(formData));
+	};
+
+	const handleSubmit = () => {
+		dispatch(publishArticle());
 	};
 
 	return (
@@ -55,7 +62,7 @@ export default function CreateArticlePage() {
 				</ButtonOutlinePrimary>
 			</ButtonGroup>
 			{isPreview ? (
-				<MarkdownPreview />
+				<PreviewSection articleData={data} />
 			) : (
 				<ArticleForm
 					formData={formData}

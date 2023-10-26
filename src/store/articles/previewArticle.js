@@ -4,15 +4,15 @@ const initialState = {
 	isPreview: false,
 	formData: {
 		title: "",
-		thumbnail: null,
+		thumbnailUrl: null,
 		thumbnailName: "",
-		selectedCategories: [],
+		categories: [],
 		content: "",
 	},
 };
 
-const articleSlice = createSlice({
-	name: "article",
+const previewArticleSlice = createSlice({
+	name: "previewArticle",
 	initialState,
 	reducers: {
 		togglePreview: (state) => {
@@ -23,7 +23,7 @@ const articleSlice = createSlice({
 			const formData = state.formData;
 
 			if (payload.thumbnail && payload.thumbnailName) {
-				formData.thumbnail = payload.thumbnail;
+				formData.thumbnailUrl = payload.thumbnail;
 				formData.thumbnailName = payload.thumbnailName;
 			}
 
@@ -44,6 +44,8 @@ export const {
 	updateArticleData,
 	publishArticle,
 	resetArticleData,
-} = articleSlice.actions;
+} = previewArticleSlice.actions;
 
-export default articleSlice.reducer;
+export const selectPreviewArticle = (state) => state.previewArticle;
+
+export default previewArticleSlice.reducer;

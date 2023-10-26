@@ -49,6 +49,9 @@ export const APIAuth = {
 
 			// update additional profile
 			const data = {
+				email: email,
+				displayName: username,
+				photoURL: `https://ui-avatars.com/api/?name=${username}`,
 				firstName: firstName,
 				lastName: lastName,
 				age: null,

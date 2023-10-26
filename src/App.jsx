@@ -4,17 +4,22 @@ import { BaseLayout } from "./layouts";
 import { PrivateRoute } from "./routes/private-route";
 import { ProtectedRoute } from "./routes/protected-route";
 import { Route, Routes } from "react-router-dom";
-import { setAuthenticated, setUser } from "./store/user/manageUser";
+import { setAuthenticated, setUser } from "./store/users/manageUser";
 import { useDispatch } from "react-redux";
 import { useEffect } from "react";
+
 import CreateArticlePage from "./pages/create-article.page";
 import HomePage from "./pages/home.page";
 import LoginPage from "./pages/login.page";
 import NotFoundPage from "./pages/not-found.page";
+import ReadArticlesPage from "./pages/read-articles.page";
+import ReadCurrentArticlePage from "./pages/read-current-article";
 import RegisterPage from "./pages/register.page";
+import { ScrollToTop } from "./utils/scrollToTop";
 
 function App() {
 	const dispatch = useDispatch();
+	ScrollToTop();
 
 	useEffect(() => {
 		auth.onAuthStateChanged((user) => {
@@ -44,6 +49,16 @@ function App() {
 				<Route
 					path="/"
 					element={<HomePage />}
+				/>
+
+				<Route
+					path="/read"
+					element={<ReadArticlesPage />}
+				/>
+
+				<Route
+					path="/read/article/:articleId"
+					element={<ReadCurrentArticlePage />}
 				/>
 
 				<Route

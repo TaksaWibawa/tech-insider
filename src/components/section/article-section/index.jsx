@@ -1,53 +1,24 @@
-import { Heading } from "@chakra-ui/react";
-import { FlexLayout } from "../../../layouts";
-import { Pagination } from "../../pagination";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import {
+	fetchArticles,
+	getArticles,
+} from "../../../store/articles/fetchArticles";
 import { ArticleCard } from "../../card";
+import { FlexLayout } from "../../../layouts";
+import { Heading } from "@chakra-ui/react";
+import { LoadSpinner } from "../../spinner";
+import { Pagination } from "../../pagination";
 
 export function ArticleSection() {
-	const cardData = [
-		{
-			id: 1,
-			title: "Building a React Component Library with Chakra UI",
-			thumbnail:
-				"https://images.unsplash.com/photo-1555041469-a586c61ea9bc?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1770&q=80",
-			categories: ["Programming", "Product"],
-			content:
-				"Some quick example text to build on the card title and make up the bulk of the card's content.  make up the bulk of the card's content.",
-			date: "Sep 08, 2021",
-			authorData: {
-				name: "John Doe",
-				avatar: "https://bit.ly/dan-abramov",
-			},
-		},
-		{
-			id: 2,
-			title: "Building a React Component Library with Chakra UI",
-			thumbnail:
-				"https://images.unsplash.com/photo-1555041469-a586c61ea9bc?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1770&q=80",
-			categories: ["Programming", "Product"],
-			content:
-				"Some quick example text to build on the card title and make up the bulk of the card's content.  make up the bulk of the card's content.",
-			date: "Sep 08, 2021",
-			authorData: {
-				name: "John Doe",
-				avatar: "https://bit.ly/dan-abramov",
-			},
-		},
-		{
-			id: 3,
-			title: "Building a React Component Library with Chakra UI",
-			thumbnail:
-				"https://images.unsplash.com/photo-1555041469-a586c61ea9bc?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1770&q=80",
-			categories: ["Programming", "Product"],
-			content:
-				"Some quick example text to build on the card title and make up the bulk of the card's content.  make up the bulk of the card's content.",
-			date: "Sep 08, 2021",
-			authorData: {
-				name: "John Doe",
-				avatar: "https://bit.ly/dan-abramov",
-			},
-		},
-	];
+	const dispatch = useDispatch();
+	const result = useSelector(getArticles);
+
+	const { status, data: articles } = result;
+
+	useEffect(() => {
+		dispatch(fetchArticles());
+	}, [dispatch]);
 
 	return (
 		<FlexLayout
@@ -59,25 +30,25 @@ export function ArticleSection() {
 				as={"h2"}
 				color={"#000000CC"}
 				fontSize={{ base: "2.25rem", sm: "2.5rem", lg: "2.75rem" }}
+				textAlign={{ base: "center", lg: "left" }}
 			>
 				List of Articles
 			</Heading>
-			<Pagination
-				data={cardData}
-				itemsPerPage={4}
-				renderItem={(item) => (
-					<ArticleCard
-						key={item.id}
-						articleData={item.authorData}
-						articleId={item.id}
-						categories={item.categories}
-						content={item.content}
-						date={item.date}
-						thumbnail={item.thumbnail}
-						title={item.title}
-					/>
-				)}
-			/>
+
+			{status === "success" && (
+				<Pagination
+					data={articles}
+					itemsPerPage={6}
+					renderItem={(article) => (
+						<ArticleCard
+							key={article.id}
+							articleData={article}
+						/>
+					)}
+				/>
+			)}
+
+			{status === "loading" && <LoadSpinner />}
 		</FlexLayout>
 	);
 }
