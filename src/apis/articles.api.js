@@ -1,6 +1,14 @@
-import { collection, doc, getDoc, getDocs } from "firebase/firestore";
-import { ref, getDownloadURL } from "firebase/storage";
+import {
+	collection,
+	doc,
+	getDoc,
+	getDocs,
+	addDoc,
+	serverTimestamp,
+} from "firebase/firestore";
+import { ref, getDownloadURL, uploadBytesResumable } from "firebase/storage";
 import { db, storage } from "../config/firebase";
+import { v4 as uuid } from "uuid";
 
 export const APIArticles = {
 	getAllArticles: async () => {
@@ -36,19 +44,6 @@ export const APIArticles = {
 					const authorData = authorDocSnap.data();
 					articleData.author = authorData;
 					delete articleData.authorRef;
-				} else {
-					articleData.author = {};
-					delete articleData.authorRef;
-				}
-
-				const thumbnailUrl = await APIArticles.getArticleThumbnail(
-					articleData.thumbnail
-				);
-
-				if (thumbnailUrl) {
-					articleData.thumbnailUrl = thumbnailUrl;
-				} else {
-					articleData.thumbnailUrl = "";
 				}
 
 				if (articleData.created) {
@@ -68,6 +63,62 @@ export const APIArticles = {
 		try {
 			const thumbnailRef = ref(storage, `thumbnails/${thumbnailName}`);
 			const thumbnailUrl = await getDownloadURL(thumbnailRef);
+			return thumbnailUrl;
+		} catch (err) {
+			throw new Error(err);
+		}
+	},
+
+	addArticle: async (articleData) => {
+		try {
+			// add authorRef for reference of author
+			const { uid } = articleData.author;
+			const authorRef = doc(db, "users", uid);
+			articleData.authorRef = authorRef;
+
+			// delete author property
+			delete articleData.author;
+
+			// add when article is created
+			articleData.created = serverTimestamp();
+
+			// get thumbnailUrl
+			const thumbnailUrl = await APIArticles.addArticleThumbnail(
+				articleData.thumbnail
+			);
+			articleData.thumbnailUrl = thumbnailUrl;
+
+			// delete thumbnail property
+			delete articleData.thumbnail;
+
+			// add article to firestore
+			await addDoc(collection(db, "articles"), articleData);
+
+			// return success message
+			return "Article added successfully";
+		} catch (err) {
+			throw new Error(err);
+		}
+	},
+
+	addArticleThumbnail: async (thumbnail) => {
+		try {
+			const metadata = {
+				contentType: "image/png",
+			};
+
+			const thumbnailName = `${uuid(10)}_${thumbnail.name}`;
+			const thumbnailRef = ref(storage, `thumbnails/${thumbnailName}`);
+
+			const uploadThumbnail = await uploadBytesResumable(
+				thumbnailRef,
+				thumbnail,
+				metadata
+			);
+
+			const snapshot = await uploadThumbnail.task;
+			const thumbnailUrl = await getDownloadURL(snapshot.ref);
+
 			return thumbnailUrl;
 		} catch (err) {
 			throw new Error(err);

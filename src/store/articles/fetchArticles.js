@@ -13,7 +13,7 @@ const initialState = {
 };
 
 const fetchArticlesSlice = createSlice({
-	name: "fetchArticles",
+	name: "addArticle",
 	initialState,
 	reducers: {},
 	extraReducers: (builder) => {
