@@ -53,13 +53,13 @@ export function PreviewSection({ articleData }) {
 				{categories.length > 0 ? (
 					categories.map((category) => (
 						<Badge
-							key={category}
+							key={category.value}
 							colorScheme="blue"
 							variant={"subtle"}
 							w={"fit-content"}
 							fontFamily={"sans-serif"}
 						>
-							{category}
+							{category.label}
 						</Badge>
 					))
 				) : (

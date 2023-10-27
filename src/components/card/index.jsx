@@ -46,7 +46,7 @@ export function ArticleCard({ articleData }) {
 				>
 					{categories?.map((category) => (
 						<Square
-							key={category}
+							key={category.value}
 							border={"1px solid #000000CC"}
 							borderRadius="lg"
 							padding={"3px 7px"}
@@ -55,7 +55,7 @@ export function ArticleCard({ articleData }) {
 								fontSize={"xs"}
 								fontWeight={"semibold"}
 							>
-								{category || "No category"}
+								{category.label || "No category"}
 							</Text>
 						</Square>
 					))}

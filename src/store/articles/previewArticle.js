@@ -4,10 +4,11 @@ const initialState = {
 	isPreview: false,
 	formData: {
 		title: "",
-		thumbnailUrl: null,
-		thumbnailName: "",
 		categories: [],
 		content: "",
+		created: "",
+		thumbnailUrl: null,
+		thumbnailName: "",
 	},
 };
 
@@ -22,15 +23,7 @@ const previewArticleSlice = createSlice({
 			const payload = action.payload;
 			const formData = state.formData;
 
-			if (payload.thumbnail && payload.thumbnailName) {
-				formData.thumbnailUrl = payload.thumbnail;
-				formData.thumbnailName = payload.thumbnailName;
-			}
-
 			state.formData = { ...formData, ...payload };
-		},
-		publishArticle: (state) => {
-			console.log({ ...state.formData });
 		},
 		resetArticleData: (state) => {
 			state.isPreview = initialState.isPreview;
@@ -39,12 +32,8 @@ const previewArticleSlice = createSlice({
 	},
 });
 
-export const {
-	togglePreview,
-	updateArticleData,
-	publishArticle,
-	resetArticleData,
-} = previewArticleSlice.actions;
+export const { togglePreview, updateArticleData, resetArticleData } =
+	previewArticleSlice.actions;
 
 export const selectPreviewArticle = (state) => state.previewArticle;
 

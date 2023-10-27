@@ -58,7 +58,7 @@ export function ArticleForm({ formData, onFormChange, onSubmit }) {
 
 		if (file) {
 			const imageURL = URL.createObjectURL(file);
-			onFormChange({ thumbnail: imageURL, thumbnailName: file.name });
+			onFormChange({ thumbnailUrl: imageURL, thumbnailName: file.name });
 			setValue("thumbnail", file);
 		}
 	};
@@ -69,10 +69,9 @@ export function ArticleForm({ formData, onFormChange, onSubmit }) {
 
 	const handleCategoryChange = (values) => {
 		if (values.length > 3) {
-			// add error handling in the ui later on
 			console.log("Categories must be less than 3");
 		} else {
-			onFormChange({ categories: values.map((value) => value.value) });
+			onFormChange({ categories: values });
 		}
 	};
 
@@ -203,7 +202,7 @@ export function ArticleForm({ formData, onFormChange, onSubmit }) {
 					<Controller
 						name="categories"
 						control={control}
-						defaultValue={formData.selectedCategories}
+						defaultValue={formData.categories}
 						rules={{
 							required: "Categories is required",
 							validate: (value) =>
@@ -212,7 +211,7 @@ export function ArticleForm({ formData, onFormChange, onSubmit }) {
 						render={({ field }) => (
 							<Select
 								ref={field.ref}
-								value={field.value}
+								value={formData.categories}
 								options={availableCategories}
 								isMulti
 								onChange={(values) => {

@@ -1,10 +1,9 @@
 import { ArticleForm } from "../components/form/create-article";
-import { ButtonGroup } from "@chakra-ui/react";
+import { Alert, ButtonGroup } from "@chakra-ui/react";
 import { ButtonOutlinePrimary } from "../components/button";
 import { FlexLayout } from "../layouts";
 import { useDispatch, useSelector } from "react-redux";
 import {
-	publishArticle,
 	resetArticleData,
 	selectPreviewArticle,
 	togglePreview,
@@ -13,13 +12,15 @@ import {
 import { useEffect } from "react";
 import { PreviewSection } from "../components/section/preview-section";
 import { currentUser } from "../store/users/manageUser";
+import { addArticle, getAddArticle } from "../store/articles/addArticle";
 
 export default function CreateArticlePage() {
-	const dispatch = useDispatch();
 	const { isPreview, formData } = useSelector(selectPreviewArticle);
+	const { status, message } = useSelector(getAddArticle);
+	const dispatch = useDispatch();
 	const user = useSelector(currentUser);
 
-	const data = {
+	const previewData = {
 		author: user,
 		...formData,
 	};
@@ -38,8 +39,9 @@ export default function CreateArticlePage() {
 		dispatch(updateArticleData(formData));
 	};
 
-	const handleSubmit = () => {
-		dispatch(publishArticle());
+	const handleSubmit = (articleData) => {
+		articleData.author = user;
+		dispatch(addArticle(articleData));
 	};
 
 	return (
@@ -49,6 +51,14 @@ export default function CreateArticlePage() {
 			justifyContent={"flex-start"}
 			py={10}
 		>
+			{status === "success" && <Alert status="success">{message}</Alert>}
+
+			{status === "error" && (
+				<Alert status="error">{message || "Article not published"}</Alert>
+			)}
+
+			{status === "loading" && <Alert status="info">Publishing...</Alert>}
+
 			<ButtonGroup
 				display="flex"
 				justifyContent="flex-end"
@@ -62,7 +72,7 @@ export default function CreateArticlePage() {
 				</ButtonOutlinePrimary>
 			</ButtonGroup>
 			{isPreview ? (
-				<PreviewSection articleData={data} />
+				<PreviewSection articleData={previewData} />
 			) : (
 				<ArticleForm
 					formData={formData}
