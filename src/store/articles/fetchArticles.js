@@ -3,28 +3,24 @@ import { APIArticles } from "../../apis/articles.api";
 
 export const fetchArticles = createAsyncThunk(
 	"articles/fetchArticles",
-	APIArticles.getAllArticles
+	APIArticles.getArticles
 );
 
 const initialState = {
 	status: "idle",
 	message: "",
-	data: {},
+	data: [],
 };
 
 const fetchArticlesSlice = createSlice({
-	name: "addArticle",
+	name: "fetchArticles",
 	initialState,
 	reducers: {},
 	extraReducers: (builder) => {
 		builder.addCase(fetchArticles.fulfilled, (state, action) => {
-			if (action.payload) {
-				state.status = "success";
-				state.data = action.payload;
-			} else {
-				state.status = "failed";
-				state.message = "No data found";
-			}
+			state.status = "success";
+			state.message = "success";
+			state.data = action.payload;
 		});
 		builder.addCase(fetchArticles.pending, (state) => {
 			state.status = "loading";
@@ -38,4 +34,5 @@ const fetchArticlesSlice = createSlice({
 });
 
 export const getArticles = (state) => state.fetchArticles;
+
 export const fetchArticlesReducer = fetchArticlesSlice.reducer;

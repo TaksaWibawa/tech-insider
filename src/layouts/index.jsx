@@ -24,7 +24,6 @@ export function ContainerLayout({ children, ...rest }) {
 			as="section"
 			maxW={"full"}
 			px={{ base: 4, lg: 12 }}
-			py={0}
 			{...rest}
 		>
 			{children}

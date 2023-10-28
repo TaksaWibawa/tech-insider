@@ -26,22 +26,13 @@ const manageUserSlice = createSlice({
 		setUser: (state, action) => {
 			const data = action.payload;
 			if (state.isAuthenticated) {
-				state.user = {
-					uid: data.uid,
-					email: data.email,
-					displayName: data.displayName,
-					firstName: data.firstName,
-					lastName: data.lastName,
-					photoURL: data.photoURL,
-					age: data.age,
-					bio: data.bio,
-				};
+				state.user = data;
 			}
 		},
 
 		clearUser: (state) => {
-			state.isAuthenticated = initialState.isAuthenticated;
-			state.user = initialState.user;
+			state = initialState;
+			return state;
 		},
 	},
 });

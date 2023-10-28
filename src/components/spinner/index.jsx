@@ -10,6 +10,7 @@ export function LoadSpinner() {
 			display={"flex"}
 			alignItems={"center"}
 			justifyContent={"center"}
+			my={6}
 		>
 			<Spinner
 				thickness="4px"
