@@ -12,7 +12,6 @@ import NotFoundPage from "./not-found.page";
 import { useChangeDocTitle } from "../hooks/useChangeDocTitle";
 
 export default function ReadCurrentArticlePage() {
-	useChangeDocTitle(result?.data?.title);
 
 	const { articleId } = useParams();
 
@@ -23,6 +22,8 @@ export default function ReadCurrentArticlePage() {
 	}, [dispatch, articleId]);
 
 	const result = useSelector(selectArticle);
+	useChangeDocTitle(result?.data?.title);
+
 
 	return (
 		<BaseLayout>
