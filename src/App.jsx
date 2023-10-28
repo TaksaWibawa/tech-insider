@@ -15,14 +15,15 @@ import NotFoundPage from "./pages/not-found.page";
 import ReadArticlesPage from "./pages/read-articles.page";
 import ReadCurrentArticlePage from "./pages/read-current-article";
 import RegisterPage from "./pages/register.page";
-import { ScrollToTop } from "./utils/scrollToTop";
+import { useScrollToTop } from "./hooks/useScrollToTop";
 
 function App() {
 	const dispatch = useDispatch();
-	ScrollToTop();
+
+	useScrollToTop();
 
 	useEffect(() => {
-		auth.onAuthStateChanged((user) => {
+		const authStateChanged = auth.onAuthStateChanged((user) => {
 			if (user) {
 				dispatch(setAuthenticated());
 				try {
@@ -41,6 +42,8 @@ function App() {
 				}
 			}
 		});
+
+		return () => authStateChanged();
 	}, [dispatch]);
 
 	return (
@@ -50,17 +53,14 @@ function App() {
 					path="/"
 					element={<HomePage />}
 				/>
-
 				<Route
 					path="/read"
 					element={<ReadArticlesPage />}
 				/>
-
 				<Route
 					path="/read/article/:articleId"
 					element={<ReadCurrentArticlePage />}
 				/>
-
 				<Route
 					path="/"
 					element={<PrivateRoute />}
@@ -70,7 +70,6 @@ function App() {
 						element={<CreateArticlePage />}
 					/>
 				</Route>
-
 				<Route
 					path="/"
 					element={<ProtectedRoute />}
@@ -84,7 +83,6 @@ function App() {
 						element={<RegisterPage />}
 					/>
 				</Route>
-
 				<Route
 					path="*"
 					element={<NotFoundPage />}

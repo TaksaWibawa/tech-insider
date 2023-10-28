@@ -14,8 +14,9 @@ import { resetArticleData } from "../../../store/articles/previewArticle";
 import { RiFile2Fill } from "react-icons/ri";
 import { useDispatch } from "react-redux";
 import { useForm, Controller } from "react-hook-form";
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
 import Select from "react-select";
+import { resetStatusAddArticle } from "../../../store/articles/addArticle";
 
 const availableCategories = [
 	{ value: "Computer", label: "Computer" },
@@ -51,6 +52,26 @@ export function ArticleForm({ formData, onFormChange, onSubmit }) {
 
 	const fileInputRef = useRef(null);
 	const dispatch = useDispatch();
+
+	useEffect(() => {
+		// Create the file from blob when mounted
+		if (formData.thumbnailUrl) {
+			fetch(formData.thumbnailUrl)
+				.then((res) => res.blob())
+				.then((blob) => {
+					const file = new File([blob], formData.thumbnailName, {
+						type: blob.type,
+					});
+					setValue("thumbnail", file);
+				});
+		}
+	}, [formData.thumbnailUrl, formData.thumbnailName, setValue]);
+
+	useEffect(() => {
+		return () => {
+			dispatch(resetStatusAddArticle());
+		};
+	}, [dispatch]);
 
 	const handleImageChange = (e) => {
 		e.preventDefault();
@@ -142,7 +163,6 @@ export function ArticleForm({ formData, onFormChange, onSubmit }) {
 					<Controller
 						name="thumbnail"
 						control={control}
-						defaultValue={formData.thumbnail}
 						rules={{
 							required: "Thumbnail is required",
 						}}
@@ -179,7 +199,7 @@ export function ArticleForm({ formData, onFormChange, onSubmit }) {
 								/>
 								<input
 									type="file"
-									accept="image/*"
+									accept="image/jpg, image/jpeg, image/png"
 									style={{ display: "none" }}
 									ref={fileInputRef}
 									onInput={handleImageChange}

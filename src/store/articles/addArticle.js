@@ -12,9 +12,14 @@ const initialState = {
 };
 
 const addArticleSlice = createSlice({
-	name: "addArticle",
+	name: "fetchArticles",
 	initialState,
-	reducers: {},
+	reducers: {
+		resetStatusAddArticle: (state) => {
+			state.status = "idle";
+			state.message = "";
+		},
+	},
 	extraReducers: (builder) => {
 		builder.addCase(addArticle.fulfilled, (state, action) => {
 			state.status = "success";
@@ -32,4 +37,5 @@ const addArticleSlice = createSlice({
 });
 
 export const getAddArticle = (state) => state.addArticle;
+export const { resetStatusAddArticle } = addArticleSlice.actions;
 export const addArticleReducer = addArticleSlice.reducer;
