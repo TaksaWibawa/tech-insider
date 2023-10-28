@@ -3,14 +3,17 @@ import {
 	fetchArticle,
 	selectArticle,
 } from "../store/articles/fetchArticleById";
-import { FlexLayout } from "../layouts";
+import { BaseLayout, FlexLayout } from "../layouts";
 import { PreviewSection } from "../components/section/preview-section";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { useParams } from "react-router-dom";
 import NotFoundPage from "./not-found.page";
+import { useChangeDocTitle } from "../hooks/useChangeDocTitle";
 
 export default function ReadCurrentArticlePage() {
+	useChangeDocTitle(result?.data?.title);
+
 	const { articleId } = useParams();
 
 	const dispatch = useDispatch();
@@ -22,19 +25,21 @@ export default function ReadCurrentArticlePage() {
 	const result = useSelector(selectArticle);
 
 	return (
-		<FlexLayout
-			as={"article"}
-			flexDir={"column"}
-			justifyContent={"flex-start"}
-			py={10}
-		>
-			{result.status === "loading" && <ArticleSkeleton />}
+		<BaseLayout>
+			<FlexLayout
+				as={"article"}
+				flexDir={"column"}
+				justifyContent={"flex-start"}
+				py={10}
+			>
+				{result.status === "loading" && <ArticleSkeleton />}
 
-			{result.status === "success" && (
-				<PreviewSection articleData={result.data} />
-			)}
+				{result.status === "success" && (
+					<PreviewSection articleData={result.data} />
+				)}
 
-			{result.status === "failed" && <NotFoundPage />}
-		</FlexLayout>
+				{result.status === "failed" && <NotFoundPage />}
+			</FlexLayout>
+		</BaseLayout>
 	);
 }

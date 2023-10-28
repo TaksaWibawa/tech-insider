@@ -2,8 +2,11 @@ import { Box, Heading, Center } from "@chakra-ui/react";
 import { FaExclamationCircle } from "react-icons/fa";
 import { ButtonPrimary } from "../components/button";
 import { useNavigate } from "react-router";
+import { useChangeDocTitle } from "../hooks/useChangeDocTitle";
 
 export default function NotFoundPage() {
+	useChangeDocTitle("Page Not Found (404)");
+
 	const navigate = useNavigate();
 
 	return (

@@ -5,12 +5,12 @@ import {
 	fetchArticles,
 	getArticles,
 } from "../../../store/articles/fetchArticles";
-import { ArticleCard } from "../../card";
 import { ContainerLayout } from "../../../layouts";
 import { Heading, Grid, Text } from "@chakra-ui/react";
 import { LoadSpinner } from "../../spinner";
 import { useObserver } from "../../../hooks/useObserver";
 import InfiniteScroll from "react-infinite-scroll-component";
+import { HorizontalArticleCard } from "../../card/horizontal-card";
 
 export function ArticleSection() {
 	const dispatch = useDispatch();
@@ -81,17 +81,13 @@ export function ArticleSection() {
 					}
 				>
 					<Grid
-						templateColumns={{
-							base: "repeat(1, 1fr)",
-							md: "repeat(2, 1fr)",
-							lg: "repeat(4, 1fr)",
-						}}
+						templateColumns={"repeat(1, 1fr)"}
 						gap={6}
 						justifyContent="center"
 					>
 						{articles.slice(0, loadedCount).map((article) => {
 							return (
-								<ArticleCard
+								<HorizontalArticleCard
 									key={article.id}
 									articleData={article}
 								/>

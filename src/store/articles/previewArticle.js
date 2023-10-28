@@ -37,4 +37,4 @@ export const { togglePreview, updateArticleData, resetArticleData } =
 
 export const selectPreviewArticle = (state) => state.previewArticle;
 
-export default previewArticleSlice.reducer;
+export const previewArticleReducer = previewArticleSlice.reducer;

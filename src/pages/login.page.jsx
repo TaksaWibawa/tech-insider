@@ -1,5 +1,5 @@
 /* eslint-disable react/no-unescaped-entities */
-import { GridLayout } from "../layouts";
+import { BaseLayout, GridLayout } from "../layouts";
 import {
 	AspectRatio,
 	Box,
@@ -12,10 +12,13 @@ import {
 import { NavLink } from "react-router-dom";
 import { SignInForm } from "../components/form/signin";
 import { SignInImage } from "../components/icons";
+import { useChangeDocTitle } from "../hooks/useChangeDocTitle";
 
 export default function LoginPage() {
+	useChangeDocTitle("Sign In");
+
 	return (
-		<>
+		<BaseLayout>
 			<GridLayout
 				templateColumns={{
 					base: "1fr",
@@ -80,6 +83,6 @@ export default function LoginPage() {
 					</AspectRatio>
 				</GridItem>
 			</GridLayout>
-		</>
+		</BaseLayout>
 	);
 }

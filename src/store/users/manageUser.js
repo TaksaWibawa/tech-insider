@@ -42,4 +42,4 @@ export const { setAuthenticated, setUser, clearUser } = manageUserSlice.actions;
 export const userStatus = (state) => state.manageUser.isAuthenticated;
 export const currentUser = (state) => state.manageUser.user;
 
-export default manageUserSlice.reducer;
+export const manageUserReducer = manageUserSlice.reducer;
