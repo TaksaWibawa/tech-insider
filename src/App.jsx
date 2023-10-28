@@ -1,6 +1,5 @@
 import { APIProfile } from "./apis/profile.api";
 import { auth } from "./config/firebase";
-import { BaseLayout } from "./layouts";
 import { PrivateRoute } from "./routes/private-route";
 import { ProtectedRoute } from "./routes/protected-route";
 import { Route, Routes } from "react-router-dom";
@@ -16,11 +15,13 @@ import ReadArticlesPage from "./pages/read-articles.page";
 import ReadCurrentArticlePage from "./pages/read-current-article";
 import RegisterPage from "./pages/register.page";
 import { useScrollToTop } from "./hooks/useScrollToTop";
+import DashboardPage from "./pages/dashboard.page";
 
 function App() {
-	const dispatch = useDispatch();
-
 	useScrollToTop();
+	// change document favicon
+
+	const dispatch = useDispatch();
 
 	useEffect(() => {
 		const authStateChanged = auth.onAuthStateChanged((user) => {
@@ -47,48 +48,51 @@ function App() {
 	}, [dispatch]);
 
 	return (
-		<BaseLayout>
-			<Routes>
+		<Routes>
+			<Route
+				path="/"
+				element={<HomePage />}
+			/>
+			<Route
+				path="/read"
+				element={<ReadArticlesPage />}
+			/>
+			<Route
+				path="/read/article/:articleId"
+				element={<ReadCurrentArticlePage />}
+			/>
+			<Route
+				path="/"
+				element={<PrivateRoute />}
+			>
 				<Route
-					path="/"
-					element={<HomePage />}
+					path="/write"
+					element={<CreateArticlePage />}
+				/>
+
+				<Route
+					path="/dashboard"
+					element={<DashboardPage />}
+				/>
+			</Route>
+			<Route
+				path="/"
+				element={<ProtectedRoute />}
+			>
+				<Route
+					path="/login"
+					element={<LoginPage />}
 				/>
 				<Route
-					path="/read"
-					element={<ReadArticlesPage />}
+					path="/register"
+					element={<RegisterPage />}
 				/>
-				<Route
-					path="/read/article/:articleId"
-					element={<ReadCurrentArticlePage />}
-				/>
-				<Route
-					path="/"
-					element={<PrivateRoute />}
-				>
-					<Route
-						path="/write"
-						element={<CreateArticlePage />}
-					/>
-				</Route>
-				<Route
-					path="/"
-					element={<ProtectedRoute />}
-				>
-					<Route
-						path="/login"
-						element={<LoginPage />}
-					/>
-					<Route
-						path="/register"
-						element={<RegisterPage />}
-					/>
-				</Route>
-				<Route
-					path="*"
-					element={<NotFoundPage />}
-				/>
-			</Routes>
-		</BaseLayout>
+			</Route>
+			<Route
+				path="*"
+				element={<NotFoundPage />}
+			/>
+		</Routes>
 	);
 }
 

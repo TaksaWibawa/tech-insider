@@ -4,7 +4,7 @@ export function LoadSpinner() {
 	return (
 		<Box
 			w={"full"}
-			h={"full"}
+			h={"100vh"}
 			gridColumn={"1 / -1"}
 			gridRow={"1 / -1"}
 			display={"flex"}

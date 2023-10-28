@@ -1,13 +1,20 @@
 import {
 	addDoc,
 	collection,
+	deleteDoc,
 	doc,
 	getDoc,
 	getDocs,
 	query,
 	serverTimestamp,
+	where,
 } from "firebase/firestore";
-import { ref, getDownloadURL, uploadBytesResumable } from "firebase/storage";
+import {
+	deleteObject,
+	getDownloadURL,
+	ref,
+	uploadBytesResumable,
+} from "firebase/storage";
 import { db, storage } from "../config/firebase";
 import { v4 as uuid } from "uuid";
 
@@ -60,6 +67,36 @@ export const APIArticles = {
 
 				return articleData;
 			}
+		} catch (err) {
+			throw new Error(err);
+		}
+	},
+
+	getArticlesByAuthor: async (authorId) => {
+		try {
+			// get authorRef based on authorId
+			const authorRef = doc(db, "users", authorId);
+			const authorDocSnap = await getDoc(authorRef);
+
+			// get articles based on authorId
+			if (!authorDocSnap.exists()) throw new Error("Author does not exist");
+			const q = query(
+				collection(db, "articles"),
+				where("authorRef", "==", authorRef)
+			);
+
+			// get all articles based on authorRef
+			const querySnapshot = await getDocs(q);
+			if (querySnapshot.empty) throw new Error("No articles found");
+
+			// map all articles to get article data
+			const articlePromises = querySnapshot.docs.map((doc) => {
+				const id = doc.id;
+				return APIArticles.getArticle(id);
+			});
+
+			const resolvedArticles = await Promise.all(articlePromises);
+			return resolvedArticles;
 		} catch (err) {
 			throw new Error(err);
 		}
@@ -126,6 +163,46 @@ export const APIArticles = {
 			const thumbnailUrl = await getDownloadURL(snapshot.ref);
 
 			return thumbnailUrl;
+		} catch (err) {
+			throw new Error(err);
+		}
+	},
+
+	deleteArticleById: async (articleId) => {
+		try {
+			// delete thumbnail based on articleId
+			const articleData = await APIArticles.getArticle(articleId);
+			const thumbnailUrl = articleData.thumbnailUrl;
+			await APIArticles.deleteThumbnailByUrl(thumbnailUrl);
+
+			// get article data based on articleId
+			const docRef = doc(db, "articles", articleId);
+			const docSnap = await getDoc(docRef);
+
+			// if article exists, delete article
+			if (docSnap.exists()) {
+				await deleteDoc(docRef);
+				return "Article deleted successfully";
+			}
+		} catch (err) {
+			throw new Error(err);
+		}
+	},
+
+	deleteThumbnailByUrl: async (thumbnailUrl) => {
+		try {
+			// get thumbnailName based on thumbnailUrl
+			const startIndex = thumbnailUrl.indexOf("thumbnails%2F");
+			const endIndex = thumbnailUrl.indexOf("?");
+			const thumbnailName = thumbnailUrl.substring(startIndex + 13, endIndex);
+
+			// delete thumbnail based on thumbnailName
+			const thumbnailRef = ref(storage, `thumbnails/${thumbnailName}`);
+
+			if (!thumbnailRef) throw new Error("Thumbnail does not exist");
+
+			await deleteObject(thumbnailRef);
+			return "Thumbnail deleted successfully";
 		} catch (err) {
 			throw new Error(err);
 		}

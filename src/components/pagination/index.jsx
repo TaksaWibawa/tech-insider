@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
 import { useState } from "react";
-import { Flex, Button, HStack, Grid, Container } from "@chakra-ui/react";
+import { Flex, Button, HStack, Grid, Container, Text } from "@chakra-ui/react";
 import { ButtonPrimary } from "../button";
 
 export function Pagination({ data, itemsPerPage, renderItem }) {
@@ -64,18 +64,17 @@ export function Pagination({ data, itemsPerPage, renderItem }) {
 			p={0}
 		>
 			<Grid
-				templateColumns={{
-					base: "repeat(1, 1fr)",
-					md: "repeat(2, 1fr)",
-					lg: "repeat(4, 1fr)",
-				}}
+				templateColumns={"repeat(1, 1fr)"}
 				mb={6}
-				gap={6}
 			>
 				{renderContent()}
 			</Grid>
 
-			<Flex justify="center">
+			<Flex
+				align="center"
+				flexDir={"column"}
+				justify="center"
+			>
 				<HStack spacing={2}>
 					<ButtonPrimary
 						key="prev"
@@ -93,6 +92,15 @@ export function Pagination({ data, itemsPerPage, renderItem }) {
 						{"Next"}
 					</ButtonPrimary>
 				</HStack>
+				<Text
+					mt={2}
+					ml={2}
+					color={"gray.800"}
+					fontSize={"sm"}
+					lineHeight={"1.5"}
+					noOfLines={1}
+					fontWeight={"semibold"}
+				>{`Page ${currentPage} of ${totalPages}`}</Text>
 			</Flex>
 		</Container>
 	);

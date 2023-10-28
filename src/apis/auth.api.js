@@ -41,13 +41,7 @@ export const APIAuth = {
 			);
 			const user = result.user;
 
-			// update basic profile
-			await updateProfile(user, {
-				displayName: username,
-				photoURL: `https://ui-avatars.com/api/?name=${username}`,
-			});
-
-			// update additional profile
+			// update profile in firestore
 			const data = {
 				email: email,
 				displayName: username,
@@ -57,6 +51,12 @@ export const APIAuth = {
 				age: null,
 				bio: "",
 			};
+
+			// update profile in auth
+			await updateProfile(user, {
+				displayName: data.displayName,
+				photoURL: data.photoURL,
+			});
 
 			// add user to database
 			await setDoc(doc(db, "users", user.uid), data);
