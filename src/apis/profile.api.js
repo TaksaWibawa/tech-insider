@@ -1,5 +1,5 @@
+import { db } from "@/config/firebase";
 import { doc, getDoc } from "@firebase/firestore";
-import { db } from "../config/firebase";
 
 export const APIProfile = {
 	getUserProfile: async (uid) => {

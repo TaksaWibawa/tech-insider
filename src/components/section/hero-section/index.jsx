@@ -1,8 +1,8 @@
 /* eslint-disable react/no-unescaped-entities */
-import { ButtonOutlinePrimary, ButtonPrimary } from "../../button";
+import { ButtonOutlinePrimary, ButtonPrimary } from "@/components/button";
 import { Center, Heading, Text, Flex, VStack } from "@chakra-ui/react";
-import { GridLayout } from "../../../layouts";
-import { HeroImage } from "../../icons";
+import { GridLayout } from "@/layouts";
+import { HeroImage } from "@/components/icons";
 import { useNavigate } from "react-router";
 
 export function HeroSection() {

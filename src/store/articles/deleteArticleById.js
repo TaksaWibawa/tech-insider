@@ -1,5 +1,5 @@
+import { APIArticles } from "@/apis/articles.api";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { APIArticles } from "../../apis/articles.api";
 
 export const deleteArticleById = createAsyncThunk(
 	"articles/deleteArticleById",

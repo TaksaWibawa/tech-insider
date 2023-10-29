@@ -8,8 +8,8 @@ import {
 	Text,
 	VStack,
 } from "@chakra-ui/react";
-import { FlexLayout } from "../../../layouts";
-import { MarkdownPreview } from "../../markdown/markdown-previewer";
+import { FlexLayout } from "@/layouts";
+import { MarkdownPreview } from "@/components/markdown/markdown-previewer";
 
 export function PreviewSection({ articleData }) {
 	const { title, thumbnailUrl, categories, created, content } = articleData;

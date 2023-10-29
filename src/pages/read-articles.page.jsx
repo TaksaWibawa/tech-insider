@@ -1,15 +1,14 @@
 /* eslint-disable react/prop-types */
-
-import { useDispatch, useSelector } from "react-redux";
-import { fetchArticles, getArticles } from "../store/articles/fetchArticles";
-import { useCallback, useEffect, useState } from "react";
-import { useObserver } from "../hooks/useObserver";
-import { BaseLayout, ContainerLayout } from "../layouts";
+import { BaseLayout, ContainerLayout } from "@/layouts";
+import { fetchArticles, getArticles } from "@/store/articles/fetchArticles";
 import { Grid, Text } from "@chakra-ui/layout";
-import { LoadSpinner } from "../components/spinner";
+import { HorizontalArticleCard } from "@/components/card/horizontal-card";
+import { LoadSpinner } from "@/components/spinner";
+import { useCallback, useEffect, useState } from "react";
+import { useChangeDocTitle } from "@/hooks/useChangeDocTitle";
+import { useDispatch, useSelector } from "react-redux";
+import { useObserver } from "@/hooks/useObserver";
 import InfiniteScroll from "react-infinite-scroll-component";
-import { HorizontalArticleCard } from "../components/card/horizontal-card";
-import { useChangeDocTitle } from "../hooks/useChangeDocTitle";
 
 export default function ReadArticlesPage() {
 	useChangeDocTitle("Read Articles");

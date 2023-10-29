@@ -10,9 +10,9 @@ import {
 	Input,
 } from "@chakra-ui/react";
 import { useForm } from "react-hook-form";
-import { ButtonPrimary } from "../../button";
+import { ButtonPrimary } from "@/components/button";
 import { useDispatch } from "react-redux";
-import { createAccount } from "../../../store/users/createAccount";
+import { createAccount } from "@/store/users/createAccount";
 import { useNavigate } from "react-router";
 
 export function SignUpForm() {

@@ -1,26 +1,24 @@
-import { APIProfile } from "./apis/profile.api";
-import { auth } from "./config/firebase";
-import { PrivateRoute } from "./routes/private-route";
-import { ProtectedRoute } from "./routes/protected-route";
+import { APIProfile } from "@/apis/profile.api";
+import { auth } from "@/config/firebase";
+import { PrivateRoute } from "@/routes/private-route";
+import { ProtectedRoute } from "@/routes/protected-route";
 import { Route, Routes } from "react-router-dom";
-import { setAuthenticated, setUser } from "./store/users/manageUser";
+import { setAuthenticated, setUser } from "@/store/users/manageUser";
 import { useDispatch } from "react-redux";
 import { useEffect } from "react";
+import { useScrollToTop } from "@/hooks/useScrollToTop";
 
-import CreateArticlePage from "./pages/create-article.page";
-import HomePage from "./pages/home.page";
-import LoginPage from "./pages/login.page";
-import NotFoundPage from "./pages/not-found.page";
-import ReadArticlesPage from "./pages/read-articles.page";
-import ReadCurrentArticlePage from "./pages/read-current-article";
-import RegisterPage from "./pages/register.page";
-import { useScrollToTop } from "./hooks/useScrollToTop";
-import DashboardPage from "./pages/dashboard.page";
+import CreateArticlePage from "@/pages/create-article.page";
+import DashboardPage from "@/pages/dashboard.page";
+import HomePage from "@/pages/home.page";
+import LoginPage from "@/pages/login.page";
+import NotFoundPage from "@/pages/not-found.page";
+import ReadArticlesPage from "@/pages/read-articles.page";
+import ReadCurrentArticlePage from "@/pages/read-current-article";
+import RegisterPage from "@/pages/register.page";
 
 function App() {
 	useScrollToTop();
-	// change document favicon
-
 	const dispatch = useDispatch();
 
 	useEffect(() => {

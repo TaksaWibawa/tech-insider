@@ -1,19 +1,19 @@
-import { ArticleForm } from "../components/form/create-article";
+import { ArticleForm } from "@/components/form/create-article";
 import { Alert, ButtonGroup } from "@chakra-ui/react";
-import { ButtonOutlinePrimary } from "../components/button";
-import { BaseLayout, FlexLayout } from "../layouts";
+import { ButtonOutlinePrimary } from "@/components/button";
+import { BaseLayout, FlexLayout } from "@/layouts";
 import { useDispatch, useSelector } from "react-redux";
 import {
 	resetArticleData,
 	selectPreviewArticle,
 	togglePreview,
 	updateArticleData,
-} from "../store/articles/previewArticle";
+} from "@/store/articles/previewArticle";
 import { useEffect } from "react";
-import { PreviewSection } from "../components/section/preview-section";
-import { currentUser } from "../store/users/manageUser";
-import { addArticle, getAddArticle } from "../store/articles/addArticle";
-import { useChangeDocTitle } from "../hooks/useChangeDocTitle";
+import { PreviewSection } from "@/components/section/preview-section";
+import { currentUser } from "@/store/users/manageUser";
+import { addArticle, getAddArticle } from "@/store/articles/addArticle";
+import { useChangeDocTitle } from "@/hooks/useChangeDocTitle";
 
 export default function CreateArticlePage() {
 	useChangeDocTitle("Create Your Article");

@@ -14,10 +14,7 @@ import {
 	Link,
 	Text,
 } from "@chakra-ui/react";
-import {
-	menuItemsMobile,
-	menuItemsAnonymous,
-} from "../../../constant/menuItems";
+import { menuItemsMobile, menuItemsAnonymous } from "@/constant/menuItems";
 import { NavLink, useLocation } from "react-router-dom";
 import { useEffect } from "react";
 

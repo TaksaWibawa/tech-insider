@@ -1,25 +1,25 @@
 import { Container, Heading, HStack } from "@chakra-ui/layout";
-import {
-	fetchArticleByAuthor,
-	selectArticleByAuthor,
-} from "../../../store/articles/fetchArticleByAuthor";
-import { currentUser } from "../../../store/users/manageUser";
-import { HorizontalArticleCard } from "../../card/horizontal-card";
-import { LoadSpinner } from "../../spinner";
-import { Pagination } from "../../pagination";
-import { SearchBar } from "../../search-bar";
-import { Select } from "@chakra-ui/select";
-import { Tab, TabList, TabPanel, TabPanels, Tabs } from "@chakra-ui/tabs";
-import { useDispatch, useSelector } from "react-redux";
-import { useEffect, useState } from "react";
+import { currentUser } from "@/store/users/manageUser";
 import {
 	deleteArticleById,
 	getDeleteArticleById,
 	resetStatusDeleteArticle,
-} from "../../../store/articles/deleteArticleById";
-import { DeleteModal } from "../../modal/delete-modal";
-import { getModal, resetModal, toggleModal } from "../../../store/modal";
-import { resetStatusDeleteThumbnail } from "../../../store/articles/deleteThumbnailByUrl";
+} from "@/store/articles/deleteArticleById";
+import { DeleteModal } from "@/components/modal/delete-modal";
+import {
+	fetchArticleByAuthor,
+	selectArticleByAuthor,
+} from "@/store/articles/fetchArticleByAuthor";
+import { getModal, resetModal, toggleModal } from "@/store/modal";
+import { HorizontalArticleCard } from "@/components/card/horizontal-card";
+import { LoadSpinner } from "@/components/spinner";
+import { Pagination } from "@/components/pagination";
+import { resetStatusDeleteThumbnail } from "@/store/articles/deleteThumbnailByUrl";
+import { SearchBar } from "@/components/search-bar";
+import { Select } from "@chakra-ui/select";
+import { Tab, TabList, TabPanel, TabPanels, Tabs } from "@chakra-ui/tabs";
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect, useState } from "react";
 
 export function DashboardSection() {
 	const [sort, setSort] = useState("latest");
@@ -99,7 +99,7 @@ export function DashboardSection() {
 								fontWeight="bold"
 								textAlign="center"
 							>
-								{message}
+								No Published Article Found
 							</Heading>
 						)}
 						{status === "success" && (
@@ -114,19 +114,17 @@ export function DashboardSection() {
 										No Published Article Found
 									</Heading>
 								) : (
-									<>
-										<Pagination
-											data={data}
-											renderItem={(item) => (
-												<HorizontalArticleCard
-													key={item.id}
-													articleData={item}
-													onDelete={handleToggleModal}
-												/>
-											)}
-											itemsPerPage={3}
-										/>
-									</>
+									<Pagination
+										data={data}
+										renderItem={(item) => (
+											<HorizontalArticleCard
+												key={item.id}
+												articleData={item}
+												onDelete={handleToggleModal}
+											/>
+										)}
+										itemsPerPage={3}
+									/>
 								)}
 							</>
 						)}

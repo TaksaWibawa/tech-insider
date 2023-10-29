@@ -1,4 +1,4 @@
-import { auth } from "../config/firebase";
+import { auth } from "@/config/firebase";
 import { signOut } from "firebase/auth";
 import Cookies from "js-cookie";
 

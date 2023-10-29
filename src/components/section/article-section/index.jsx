@@ -1,16 +1,13 @@
 /* eslint-disable react/prop-types */
 import { useDispatch, useSelector } from "react-redux";
 import { useState, useEffect, useCallback } from "react";
-import {
-	fetchArticles,
-	getArticles,
-} from "../../../store/articles/fetchArticles";
-import { ContainerLayout } from "../../../layouts";
+import { fetchArticles, getArticles } from "@/store/articles/fetchArticles";
+import { ContainerLayout } from "@/layouts";
 import { Heading, Grid, Text } from "@chakra-ui/react";
-import { LoadSpinner } from "../../spinner";
-import { useObserver } from "../../../hooks/useObserver";
+import { LoadSpinner } from "@/components/spinner";
+import { useObserver } from "@/hooks/useObserver";
 import InfiniteScroll from "react-infinite-scroll-component";
-import { HorizontalArticleCard } from "../../card/horizontal-card";
+import { HorizontalArticleCard } from "@/components/card/horizontal-card";
 
 export function ArticleSection() {
 	const dispatch = useDispatch();

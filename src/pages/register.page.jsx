@@ -1,10 +1,10 @@
 /* eslint-disable react/no-unescaped-entities */
-import { BaseLayout, GridLayout } from "../layouts";
+import { BaseLayout, GridLayout } from "@/layouts";
 import { Box, Button, GridItem, Heading, Text, VStack } from "@chakra-ui/react";
 import { Link } from "react-router-dom";
-import { SignUpForm } from "../components/form/signup";
-import { SignUpImage } from "../components/icons";
-import { useChangeDocTitle } from "../hooks/useChangeDocTitle";
+import { SignUpForm } from "@/components/form/signup";
+import { SignUpImage } from "@/components/icons";
+import { useChangeDocTitle } from "@/hooks/useChangeDocTitle";
 
 export default function RegisterPage() {
 	useChangeDocTitle("Sign Up");

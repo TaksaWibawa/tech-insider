@@ -15,7 +15,7 @@ import {
 	ref,
 	uploadBytesResumable,
 } from "firebase/storage";
-import { db, storage } from "../config/firebase";
+import { db, storage } from "@/config/firebase";
 import { v4 as uuid } from "uuid";
 
 export const APIArticles = {

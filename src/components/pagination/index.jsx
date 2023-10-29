@@ -1,7 +1,7 @@
 /* eslint-disable react/prop-types */
 import { useState } from "react";
 import { Flex, Button, HStack, Grid, Container, Text } from "@chakra-ui/react";
-import { ButtonPrimary } from "../button";
+import { ButtonPrimary } from "@/components/button";
 
 export function Pagination({ data, itemsPerPage, renderItem }) {
 	const [currentPage, setCurrentPage] = useState(1);

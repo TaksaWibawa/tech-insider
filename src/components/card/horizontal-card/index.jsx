@@ -15,9 +15,10 @@ import {
 
 import { FaBookOpen, FaEdit, FaTrash } from "react-icons/fa";
 import { useLocation, useNavigate } from "react-router";
-import { DeleteModal } from "../../modal/delete-modal";
 import { useDispatch } from "react-redux";
-import { setArticleId } from "../../../store/articles/deleteArticleById";
+import { setArticleId } from "@/store/articles/deleteArticleById";
+import { DeleteModal } from "@/components/modal/delete-modal";
+
 
 export function HorizontalArticleCard({ articleData, onDelete }) {
 	const { author, categories, content, created, thumbnailUrl, title } =
@@ -104,6 +105,9 @@ export function HorizontalArticleCard({ articleData, onDelete }) {
 							size={"sm"}
 							variant={"outline"}
 							colorScheme={"blue"}
+							onClick={() =>
+								navigate("/dashboard/edit/article/" + articleData.id)
+							}
 						>
 							Edit
 						</Button>

@@ -1,4 +1,4 @@
-import { authService } from "../../config/auth";
+import { authService } from "@/config/auth";
 import { Navigate, Outlet } from "react-router-dom";
 
 export function ProtectedRoute() {
