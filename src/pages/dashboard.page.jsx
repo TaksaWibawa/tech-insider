@@ -1,9 +1,9 @@
 import { Container, Flex, VStack } from "@chakra-ui/react";
-import { DashboardHeader } from "../components/navbar/dashboard";
-import { DashboardSection } from "../components/section/dashboard-section";
-import { Sidebar } from "../components/sidebar";
+import { DashboardHeader } from "@/components/navbar/dashboard";
+import { DashboardSection } from "@/components/section/dashboard-section";
+import { Sidebar } from "@/components/sidebar";
+import { useChangeDocTitle } from "@/hooks/useChangeDocTitle";
 import { useState } from "react";
-import { useChangeDocTitle } from "../hooks/useChangeDocTitle";
 
 export default function DashboardPage() {
 	const [content, setContent] = useState("Dashboard");

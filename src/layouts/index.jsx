@@ -1,7 +1,7 @@
 /* eslint-disable react/prop-types */
 import { Container, Grid, Flex } from "@chakra-ui/react";
-import { Navbar } from "../components/navbar";
-import { Footer } from "../components/footer";
+import { Footer } from "@/components/footer";
+import { Navbar } from "@/components/navbar";
 
 export function BaseLayout({ children, ...rest }) {
 	return (

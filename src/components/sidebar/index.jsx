@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
-import { authService } from "../../config/auth";
-import { BaseImage } from "../icons";
+import { authService } from "@/config/auth";
+import { BaseImage } from "@/components/icons";
 import { Box, Button, ButtonGroup, Flex, Icon, VStack } from "@chakra-ui/react";
 import { FaCog, FaUser, FaSignOutAlt, FaHome } from "react-icons/fa";
 import { Link, useNavigate } from "react-router-dom";

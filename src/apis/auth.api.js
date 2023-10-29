@@ -1,10 +1,10 @@
-import { auth, db } from "../config/firebase";
+import { auth, db } from "@/config/firebase";
 import {
 	signInWithEmailAndPassword,
 	createUserWithEmailAndPassword,
 	updateProfile,
 } from "@firebase/auth";
-import { authService } from "../config/auth";
+import { authService } from "@/config/auth";
 import { doc, setDoc } from "@firebase/firestore";
 import { APIProfile } from "./profile.api";
 

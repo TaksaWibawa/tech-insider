@@ -15,19 +15,19 @@ import {
 	Text,
 	useDisclosure,
 } from "@chakra-ui/react";
-import { authService } from "../../config/auth";
-import { BaseImage } from "../icons";
-import { ButtonBasic, ButtonOutlinePrimary, ButtonPrimary } from "../button";
+import { authService } from "@/config/auth";
+import { BaseImage } from "@/components/icons";
 import {
-	clearUser,
-	currentUser,
-	userStatus,
-} from "../../store/users/manageUser";
-import { menuItems } from "../../constant/menuItems";
-import { MobileNavbar } from "./mobile";
+	ButtonBasic,
+	ButtonOutlinePrimary,
+	ButtonPrimary,
+} from "@/components/button";
+import { clearUser, currentUser, userStatus } from "@/store/users/manageUser";
+import { menuItems } from "@/constant/menuItems";
+import { MobileNavbar } from "@/components/navbar/mobile";
 import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import { RiMenu2Line } from "react-icons/ri";
-import { SearchBar } from "../search-bar";
+import { SearchBar } from "@/components/search-bar";
 import { useDispatch, useSelector } from "react-redux";
 
 export function Navbar() {

@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
 import { dracula } from "react-syntax-highlighter/dist/esm/styles/prism";
-import { initialArticleContent } from "../../../constant/initialArticleContent";
+import { initialArticleContent } from "@/constant/initialArticleContent";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import ChakraUIRenderer from "chakra-ui-markdown-renderer";
 import ReactMarkdown from "react-markdown";

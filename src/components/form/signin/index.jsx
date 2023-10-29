@@ -5,9 +5,9 @@ import {
 	FormLabel,
 	Input,
 } from "@chakra-ui/react";
-import { APIAuth } from "../../../apis/auth.api";
-import { ButtonPrimary } from "../../button";
-import { setAuthenticated, setUser } from "../../../store/users/manageUser";
+import { APIAuth } from "@/apis/auth.api";
+import { ButtonPrimary } from "@/components/button";
+import { setAuthenticated, setUser } from "@/store/users/manageUser";
 import { useDispatch } from "react-redux";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router";

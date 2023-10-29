@@ -1,14 +1,14 @@
-import { addArticleReducer } from "./articles/addArticle";
+import { addArticleReducer } from "@/store/articles/addArticle";
 import { configureStore } from "@reduxjs/toolkit";
-import { createAccountReducer } from "./users/createAccount";
-import { deleteArticleByIdReducer } from "./articles/deleteArticleById";
-import { deleteThumbnailByUrlReducer } from "./articles/deleteThumbnailByUrl";
-import { fetchArticleByAuthorReducer } from "./articles/fetchArticleByAuthor";
-import { fetchArticleByIdReducer } from "./articles/fetchArticleById";
-import { fetchArticlesReducer } from "./articles/fetchArticles";
-import { manageUserReducer } from "./users/manageUser";
-import { modalSliceReducer } from "./modal";
-import { previewArticleReducer } from "./articles/previewArticle";
+import { createAccountReducer } from "@/store/users/createAccount";
+import { deleteArticleByIdReducer } from "@/store/articles/deleteArticleById";
+import { deleteThumbnailByUrlReducer } from "@/store/articles/deleteThumbnailByUrl";
+import { fetchArticleByAuthorReducer } from "@/store/articles/fetchArticleByAuthor";
+import { fetchArticleByIdReducer } from "@/store/articles/fetchArticleById";
+import { fetchArticlesReducer } from "@/store/articles/fetchArticles";
+import { manageUserReducer } from "@/store/users/manageUser";
+import { modalSliceReducer } from "@/store/modal";
+import { previewArticleReducer } from "@/store/articles/previewArticle";
 
 export const store = configureStore({
 	reducer: {

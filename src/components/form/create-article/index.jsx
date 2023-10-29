@@ -7,16 +7,16 @@ import {
 	InputLeftAddon,
 	VisuallyHidden,
 } from "@chakra-ui/react";
-import { ButtonPrimary } from "../../button";
-import { ErrorTooltip } from "../../tooltip";
-import { MarkdownEditor } from "../../markdown/markdown-editor";
-import { resetArticleData } from "../../../store/articles/previewArticle";
+import { ButtonPrimary } from "@/components/button";
+import { ErrorTooltip } from "@/components/tooltip";
+import { MarkdownEditor } from "@/components/markdown/markdown-editor";
+import { resetArticleData } from "@/store/articles/previewArticle";
 import { RiFile2Fill } from "react-icons/ri";
 import { useDispatch } from "react-redux";
 import { useForm, Controller } from "react-hook-form";
 import { useEffect, useRef } from "react";
 import Select from "react-select";
-import { resetStatusAddArticle } from "../../../store/articles/addArticle";
+import { resetStatusAddArticle } from "@/store/articles/addArticle";
 
 const availableCategories = [
 	{ value: "Computer", label: "Computer" },
