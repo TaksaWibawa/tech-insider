@@ -145,7 +145,7 @@ export function ArticleForm({ formData, onFormChange, onSubmit }) {
 							<Input
 								value={field.value}
 								placeholder="Title here..."
-								onChange={(e) => {
+								onInput={(e) => {
 									field.onChange(e.target.value);
 									onFormChange({ title: e.target.value });
 								}}
