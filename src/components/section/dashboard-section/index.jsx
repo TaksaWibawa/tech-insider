@@ -10,7 +10,6 @@ import {
 	fetchArticleByAuthor,
 	selectArticleByAuthor,
 } from "@/store/articles/fetchArticleByAuthor";
-import { getModal, resetModal, toggleModal } from "@/store/modal";
 import { HorizontalArticleCard } from "@/components/card/horizontal-card";
 import { LoadSpinner } from "@/components/spinner";
 import { Pagination } from "@/components/pagination";
@@ -20,15 +19,16 @@ import { Select } from "@chakra-ui/select";
 import { Tab, TabList, TabPanel, TabPanels, Tabs } from "@chakra-ui/tabs";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
+import { useModal } from "@/hooks/useModal";
 
 export function DashboardSection() {
-	const [sort, setSort] = useState("latest");
-
 	const dispatch = useDispatch();
+	const [sort, setSort] = useState("latest");
+	const { isModalOpen, toggleModal } = useModal();
+
 	const user = useSelector(currentUser);
-	const { status, message, data } = useSelector(selectArticleByAuthor);
+	const { status, data } = useSelector(selectArticleByAuthor);
 	const { status: statusDelete, articleId } = useSelector(getDeleteArticleById);
-	const { isOpen } = useSelector(getModal);
 
 	useEffect(() => {
 		dispatch(fetchArticleByAuthor(user.uid));
@@ -44,12 +44,11 @@ export function DashboardSection() {
 		return () => {
 			dispatch(resetStatusDeleteArticle());
 			dispatch(resetStatusDeleteThumbnail());
-			dispatch(resetModal());
 		};
 	}, [dispatch]);
 
 	const handleToggleModal = () => {
-		dispatch(toggleModal());
+		toggleModal();
 	};
 
 	const handleConfirmDelete = () => {
@@ -144,7 +143,7 @@ export function DashboardSection() {
 			</Tabs>
 
 			<DeleteModal
-				isOpen={isOpen}
+				isOpen={isModalOpen}
 				onClose={handleToggleModal}
 				onDelete={handleConfirmDelete}
 			/>

@@ -23,7 +23,7 @@ export function Sidebar({ state, setState }) {
 	};
 
 	const handleLogout = () => {
-		authService.logout();
+		authService.logOut();
 		navigate("/");
 	};
 
