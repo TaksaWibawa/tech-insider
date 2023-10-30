@@ -7,6 +7,7 @@ import {
 	getDocs,
 	query,
 	serverTimestamp,
+	updateDoc,
 	where,
 } from "firebase/firestore";
 import {
@@ -149,7 +150,7 @@ export const APIArticles = {
 	addArticleThumbnail: async (thumbnail) => {
 		try {
 			// give thumbnail a unique name
-			const thumbnailName = `${uuid(10)}_${thumbnail.name}`;
+			const thumbnailName = `${uuid(10)}`;
 			const thumbnailRef = ref(storage, `thumbnails/${thumbnailName}`);
 
 			// upload thumbnail to storage
@@ -171,17 +172,15 @@ export const APIArticles = {
 	deleteArticleById: async (articleId) => {
 		try {
 			// delete thumbnail based on articleId
-			const articleData = await APIArticles.getArticle(articleId);
-			const thumbnailUrl = articleData.thumbnailUrl;
-			await APIArticles.deleteThumbnailByUrl(thumbnailUrl);
-
-			// get article data based on articleId
 			const docRef = doc(db, "articles", articleId);
 			const docSnap = await getDoc(docRef);
 
 			// if article exists, delete article
 			if (docSnap.exists()) {
+				const thumbnailUrl = docSnap.data().thumbnailUrl;
 				await deleteDoc(docRef);
+				await APIArticles.deleteThumbnailByUrl(thumbnailUrl);
+
 				return "Article deleted successfully";
 			}
 		} catch (err) {
@@ -194,15 +193,55 @@ export const APIArticles = {
 			// get thumbnailName based on thumbnailUrl
 			const startIndex = thumbnailUrl.indexOf("thumbnails%2F");
 			const endIndex = thumbnailUrl.indexOf("?");
-			const thumbnailName = thumbnailUrl.substring(startIndex + 13, endIndex);
+			const thumbnailName = thumbnailUrl
+				.substring(startIndex + 13, endIndex)
+				.replace(/%20/g, " ");
 
 			// delete thumbnail based on thumbnailName
 			const thumbnailRef = ref(storage, `thumbnails/${thumbnailName}`);
 
-			if (!thumbnailRef) throw new Error("Thumbnail does not exist");
+			await deleteObject(thumbnailRef)
+				.then(() => {
+					return "success";
+				})
+				.catch((err) => {
+					throw new Error(err);
+				});
+		} catch (err) {
+			throw new Error(err);
+		}
+	},
 
-			await deleteObject(thumbnailRef);
-			return "Thumbnail deleted successfully";
+	updateArticleById: async ({ articleId, updatedData: dataToUpdate }) => {
+		try {
+			// get article data based on articleId
+			const docRef = doc(db, "articles", articleId);
+			const docSnap = await getDoc(docRef);
+
+			if (docSnap.exists()) {
+				if (dataToUpdate.thumbnail) {
+					// delete existing thumbnailUrl
+					await APIArticles.deleteThumbnailByUrl(docSnap.data().thumbnailUrl);
+					// get thumbnailUrl
+					const newThumbnailUrl = await APIArticles.addArticleThumbnail(
+						dataToUpdate.thumbnail
+					);
+					// update thumbnailUrl
+					dataToUpdate.thumbnailUrl = newThumbnailUrl;
+					delete dataToUpdate.thumbnail;
+				}
+
+				//
+				const newData = {
+					created: docSnap.data().created || serverTimestamp(),
+					authorRef: docSnap.data().authorRef,
+					...dataToUpdate,
+				};
+
+				// update article data
+				await updateDoc(docRef, newData);
+				return "Article updated successfully";
+			}
 		} catch (err) {
 			throw new Error(err);
 		}

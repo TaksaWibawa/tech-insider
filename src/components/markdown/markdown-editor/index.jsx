@@ -50,8 +50,8 @@ export const MarkdownEditor = forwardRef(
 					<FormLabel>Content</FormLabel>
 				</VisuallyHidden>
 				<Textarea
-					ref={(el) => {
-						textareaRef.current = el;
+					ref={(e) => {
+						textareaRef.current = e;
 					}}
 					_focus={{ boxShadow: "#00000033 0px 0px 0px 1px" }}
 					_placeholder={{ color: "gray.500" }}

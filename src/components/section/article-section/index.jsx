@@ -46,7 +46,10 @@ export function ArticleSection() {
 	}, [loadedCount, articles]);
 
 	return (
-		<ContainerLayout as="section">
+		<ContainerLayout
+			as="section"
+			px={16}
+		>
 			<Heading
 				as="h2"
 				color="#000000CC"

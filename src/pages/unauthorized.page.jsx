@@ -41,7 +41,7 @@ export default function UnauthorizedPage() {
 				</Heading>
 				<ButtonPrimary
 					mt={4}
-					onClick={() => navigate(-1)}
+					onClick={() => navigate("/")}
 				>
 					Go Back
 				</ButtonPrimary>

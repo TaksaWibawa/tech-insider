@@ -3,12 +3,27 @@ import { DashboardHeader } from "@/components/navbar/dashboard";
 import { DashboardSection } from "@/components/section/dashboard-section";
 import { Sidebar } from "@/components/sidebar";
 import { useChangeDocTitle } from "@/hooks/useChangeDocTitle";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { SuccessModal } from "@/components/modal/success-modal";
+import { useSelector } from "react-redux";
+import { getDeleteArticleById } from "@/store/articles/deleteArticleById";
+import { getUpdateArticleById } from "@/store/articles/updateArticleById";
+import { FailedModal } from "@/components/modal/failed-modal";
 
 export default function DashboardPage() {
 	const [content, setContent] = useState("Dashboard");
+	const [showAlert, setShowAlert] = useState(false);
 
 	useChangeDocTitle(content + " Section");
+
+	const { status: statusDelete } = useSelector(getDeleteArticleById);
+	const { status: statusUpdate } = useSelector(getUpdateArticleById);
+
+	useEffect(() => {
+		if (statusDelete === "success" || statusUpdate === "success") {
+			setShowAlert(true);
+		}
+	}, [statusDelete, statusUpdate]);
 
 	return (
 		<Flex minH="100vh">
@@ -16,7 +31,6 @@ export default function DashboardPage() {
 				state={content}
 				setState={setContent}
 			/>
-
 			<VStack
 				as={"main"}
 				align={"flex-start"}
@@ -56,6 +70,41 @@ export default function DashboardPage() {
 					</Container>
 				)}
 			</VStack>
+			{showAlert && statusUpdate === "success" && (
+				<SuccessModal
+					title="Success"
+					description="Article has been updated"
+					isOpen={showAlert}
+					onClose={() => setShowAlert(false)}
+				/>
+			)}
+
+			{showAlert && statusUpdate === "failed" && (
+				<FailedModal
+					title="Failed"
+					description="Failed to update article"
+					isOpen={showAlert}
+					onClose={() => setShowAlert(false)}
+				/>
+			)}
+
+			{showAlert && statusDelete === "success" && (
+				<SuccessModal
+					title="Success"
+					description="Article has been deleted"
+					isOpen={showAlert}
+					onClose={() => setShowAlert(false)}
+				/>
+			)}
+
+			{showAlert && statusDelete === "failed" && (
+				<FailedModal
+					title="Failed"
+					description="Failed to delete article"
+					isOpen={showAlert}
+					onClose={() => setShowAlert(false)}
+				/>
+			)}
 		</Flex>
 	);
 }

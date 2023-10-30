@@ -7,8 +7,8 @@ import { fetchArticleByAuthorReducer } from "@/store/articles/fetchArticleByAuth
 import { fetchArticleByIdReducer } from "@/store/articles/fetchArticleById";
 import { fetchArticlesReducer } from "@/store/articles/fetchArticles";
 import { manageUserReducer } from "@/store/users/manageUser";
-import { modalSliceReducer } from "@/store/modal";
 import { previewArticleReducer } from "@/store/articles/previewArticle";
+import { updateArticleByIdReducer } from "@/store/articles/updateArticleById";
 
 export const store = configureStore({
 	reducer: {
@@ -20,7 +20,7 @@ export const store = configureStore({
 		fetchArticleById: fetchArticleByIdReducer,
 		fetchArticles: fetchArticlesReducer,
 		manageUser: manageUserReducer,
-		modal: modalSliceReducer,
 		previewArticle: previewArticleReducer,
+		updateArticleById: updateArticleByIdReducer,
 	},
 });
