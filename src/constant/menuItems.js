@@ -8,14 +8,6 @@ export const menuItems = [
 		},
 	},
 	{
-		label: "Profile",
-		path: "/dashboard/profile",
-		_hover: {
-			bgColor: "gray.200",
-			color: "gray.800",
-		},
-	},
-	{
 		label: "Sign Out",
 		path: "/",
 		_hover: {

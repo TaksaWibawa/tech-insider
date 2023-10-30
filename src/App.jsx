@@ -5,7 +5,7 @@ import { ProtectedRoute } from "@/routes/protected-route";
 import { Route, Routes } from "react-router-dom";
 import { setAuthenticated, setUser } from "@/store/users/manageUser";
 import { useDispatch } from "react-redux";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useScrollToTop } from "@/hooks/useScrollToTop";
 
 import CreateArticlePage from "@/pages/create-article.page";
@@ -16,34 +16,39 @@ import NotFoundPage from "@/pages/not-found.page";
 import ReadArticlesPage from "@/pages/read-articles.page";
 import ReadCurrentArticlePage from "@/pages/read-current-article";
 import RegisterPage from "@/pages/register.page";
+import EditArticlePage from "./pages/edit-article.page";
 
 function App() {
 	useScrollToTop();
 	const dispatch = useDispatch();
+	const [isUserLoaded, setIsUserLoaded] = useState(false);
 
 	useEffect(() => {
 		const authStateChanged = auth.onAuthStateChanged((user) => {
 			if (user) {
 				dispatch(setAuthenticated());
-				try {
-					APIProfile.getUserProfile(user.uid).then((profile) => {
-						const userData = {
-							uid: user.uid,
-							email: user.email,
-							displayName: user.displayName,
-							photoURL: user.photoURL,
-							...profile,
-						};
-						dispatch(setUser(userData));
-					});
-				} catch (error) {
-					throw new Error(error);
+				if (!isUserLoaded) {
+					setIsUserLoaded(true);
+					try {
+						APIProfile.getUserProfile(user.uid).then((profile) => {
+							const userData = {
+								uid: user.uid,
+								email: user.email,
+								displayName: user.displayName,
+								photoURL: user.photoURL,
+								...profile,
+							};
+							dispatch(setUser(userData));
+						});
+					} catch (error) {
+						throw new Error(error);
+					}
 				}
 			}
 		});
 
 		return () => authStateChanged();
-	}, [dispatch]);
+	}, [dispatch, isUserLoaded]);
 
 	return (
 		<Routes>
@@ -71,6 +76,11 @@ function App() {
 				<Route
 					path="/dashboard"
 					element={<DashboardPage />}
+				/>
+
+				<Route
+					path="/dashboard/edit/:articleId"
+					element={<EditArticlePage />}
 				/>
 			</Route>
 			<Route

@@ -10,18 +10,20 @@ import {
 	VisuallyHidden,
 } from "@chakra-ui/react";
 import { ButtonPrimary } from "@/components/button";
-import { categories } from "@/constant/categories";
 import { ErrorTooltip } from "@/components/tooltip";
 import { MarkdownEditor } from "@/components/markdown/markdown-editor";
-import { resetArticleData } from "@/store/articles/previewArticle";
-import { resetStatusAddArticle } from "@/store/articles/addArticle";
 import { RiFile2Fill } from "react-icons/ri";
 import { useDispatch } from "react-redux";
 import { useEffect, useRef } from "react";
 import { useForm, Controller } from "react-hook-form";
+import Select from "react-select";
+import {
+	resetUpdateArticle,
+	setUpdatedData,
+} from "@/store/articles/updateArticleById";
+import { categories } from "@/constant/categories";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
-import Select from "react-select";
 
 const imageExtensions = ["image/jpg", "image/jpeg", "image/png"];
 
@@ -64,59 +66,60 @@ const inputStyles = {
 	letterSpacing: "1px",
 };
 
-export function ArticleForm({ formData, onFormChange, onSubmit }) {
+export function EditForm({ initialData: updatedData, onSubmit }) {
 	const {
-		control,
 		handleSubmit,
-		formState: { errors },
-		setValue,
 		reset,
+		control,
+		setValue,
+		formState: { errors },
 	} = useForm({
 		resolver: yupResolver(schema),
 	});
 
-	const fileInputRef = useRef(null);
 	const dispatch = useDispatch();
-
-	useEffect(() => {
-		// Create the file from blob when mounted
-		if (formData.thumbnailUrl) {
-			fetch(formData.thumbnailUrl)
-				.then((res) => res.blob())
-				.then((blob) => {
-					const file = new File([blob], formData.thumbnailName, {
-						type: blob.type,
-					});
-					setValue("thumbnail", file);
-				});
-		}
-	}, [formData.thumbnailUrl, formData.thumbnailName, setValue]);
-
-	useEffect(() => {
-		return () => {
-			dispatch(resetStatusAddArticle());
-		};
-	}, [dispatch]);
-
-	const handleImageChange = (e) => {
-		e.preventDefault();
-		const file = e.target.files[0];
-
-		if (file) {
-			const imageURL = URL.createObjectURL(file);
-			onFormChange({ thumbnailUrl: imageURL, thumbnailName: file.name });
-			setValue("thumbnail", file);
-		}
-	};
+	const fileInputRef = useRef(null);
 
 	const showFilePicker = () => {
 		fileInputRef.current.click();
 	};
 
+	const handleFormChange = (data) => {
+		dispatch(setUpdatedData(data));
+	};
+
+	const handleImageChange = (e) => {
+		const file = e.target.files[0];
+
+		if (file) {
+			const imageURL = URL.createObjectURL(file);
+			handleFormChange({ thumbnailUrl: imageURL, thumbnailName: file.name });
+			setValue("thumbnail", file);
+		}
+	};
+
+	useEffect(() => {
+		setValue("title", updatedData.title);
+		if (updatedData.thumbnailUrl) {
+			fetch(updatedData.thumbnailUrl)
+				.then((res) => res.blob())
+				.then((blob) => {
+					const file = new File([blob], updatedData.title, {
+						type: blob.type,
+					});
+					setValue("thumbnail", file);
+				});
+		} else {
+			setValue("thumbnail", null);
+		}
+		setValue("categories", updatedData.categories);
+		setValue("content", updatedData.content);
+	}, [updatedData, setValue]);
+
 	const submitForm = (data) => {
 		onSubmit(data);
 		reset();
-		dispatch(resetArticleData());
+		dispatch(resetUpdateArticle());
 	};
 
 	return (
@@ -140,15 +143,11 @@ export function ArticleForm({ formData, onFormChange, onSubmit }) {
 					<Controller
 						name="title"
 						control={control}
-						defaultValue={formData.title}
+						defaultValue={updatedData.title}
 						render={({ field }) => (
 							<Input
 								value={field.value}
 								placeholder="Title here..."
-								onChange={(e) => {
-									field.onChange(e.target.value);
-									onFormChange({ title: e.target.value });
-								}}
 								css={inputStyles}
 								fontSize={"48px"}
 								fontWeight={"bold"}
@@ -164,7 +163,10 @@ export function ArticleForm({ formData, onFormChange, onSubmit }) {
 									},
 								}}
 								_invalid={formStyles}
-								{...field}
+								onChange={(e) => {
+									field.onChange(e);
+									handleFormChange({ title: e.target.value });
+								}}
 							/>
 						)}
 					/>
@@ -207,7 +209,9 @@ export function ArticleForm({ formData, onFormChange, onSubmit }) {
 									fontWeight={"semibold"}
 									height={"auto"}
 									placeholder={
-										formData.thumbnailName || "Upload your thumbnail..."
+										updatedData.thumbnailName ||
+										updatedData.thumbnailUrl ||
+										"Upload your thumbnail..."
 									}
 									_placeholder={
 										errors.thumbnail
@@ -218,7 +222,8 @@ export function ArticleForm({ formData, onFormChange, onSubmit }) {
 										borderColor: "blackAlpha.500",
 									}}
 								/>
-								<input
+
+								<Input
 									type="file"
 									accept=".jpg, .jpeg, .png"
 									style={{ display: "none" }}
@@ -247,7 +252,7 @@ export function ArticleForm({ formData, onFormChange, onSubmit }) {
 					<Controller
 						name="categories"
 						control={control}
-						defaultValue={formData.categories}
+						defaultValue={updatedData.categories}
 						render={({ field }) => (
 							<Select
 								ref={field.ref}
@@ -257,7 +262,7 @@ export function ArticleForm({ formData, onFormChange, onSubmit }) {
 								onChange={(values) => {
 									field.onChange(values);
 									if (values) {
-										onFormChange({ categories: values });
+										handleFormChange({ categories: values });
 									}
 								}}
 								styles={{
@@ -296,15 +301,14 @@ export function ArticleForm({ formData, onFormChange, onSubmit }) {
 					<Controller
 						name="content"
 						control={control}
-						defaultValue={formData.content}
+						defaultValue={updatedData.content}
 						render={({ field }) => (
 							<MarkdownEditor
 								ref={field.ref}
-								value={formData.content}
-								content={formData.content}
+								content={updatedData.content}
 								onContentChange={(content) => {
 									field.onChange(content);
-									onFormChange({ content });
+									handleFormChange({ content });
 								}}
 								css={inputStyles}
 								fontSize={"18px"}
@@ -329,12 +333,11 @@ export function ArticleForm({ formData, onFormChange, onSubmit }) {
 					</FormErrorMessage>
 				</FormControl>
 			</ErrorTooltip>
-
 			<ButtonPrimary
 				size="sm"
 				type="submit"
 			>
-				Publish
+				Edit Data
 			</ButtonPrimary>
 		</form>
 	);

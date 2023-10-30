@@ -30,6 +30,12 @@ const manageUserSlice = createSlice({
 			}
 		},
 
+		getUser: (state) => {
+			if (state.isAuthenticated) {
+				return state.user;
+			}
+		},
+
 		clearUser: (state) => {
 			state = initialState;
 			return state;

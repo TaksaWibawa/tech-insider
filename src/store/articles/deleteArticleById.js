@@ -19,6 +19,7 @@ const deleteArticleByIdSlice = createSlice({
 		resetStatusDeleteArticle: (state) => {
 			state.status = "idle";
 			state.message = "";
+			state.articleId = "";
 		},
 
 		setArticleId: (state, action) => {

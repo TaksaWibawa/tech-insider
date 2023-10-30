@@ -17,10 +17,8 @@ import { FaBookOpen, FaEdit, FaTrash } from "react-icons/fa";
 import { useLocation, useNavigate } from "react-router";
 import { useDispatch } from "react-redux";
 import { setArticleId } from "@/store/articles/deleteArticleById";
-import { DeleteModal } from "@/components/modal/delete-modal";
 
-
-export function HorizontalArticleCard({ articleData, onDelete }) {
+export function HorizontalArticleCard({ articleData, toggleDelete }) {
 	const { author, categories, content, created, thumbnailUrl, title } =
 		articleData;
 	const { displayName } = author;
@@ -31,7 +29,7 @@ export function HorizontalArticleCard({ articleData, onDelete }) {
 
 	const handleDeleteArticle = (id) => {
 		dispatch(setArticleId(id));
-		onDelete();
+		toggleDelete();
 	};
 
 	return (
@@ -105,9 +103,7 @@ export function HorizontalArticleCard({ articleData, onDelete }) {
 							size={"sm"}
 							variant={"outline"}
 							colorScheme={"blue"}
-							onClick={() =>
-								navigate("/dashboard/edit/article/" + articleData.id)
-							}
+							onClick={() => navigate("/dashboard/edit/" + articleData.id)}
 						>
 							Edit
 						</Button>
@@ -122,7 +118,6 @@ export function HorizontalArticleCard({ articleData, onDelete }) {
 						</Button>
 					</>
 				) : (
-					// temporary
 					<Button
 						leftIcon={<Icon as={FaBookOpen} />}
 						size={"sm"}
@@ -134,8 +129,6 @@ export function HorizontalArticleCard({ articleData, onDelete }) {
 					</Button>
 				)}
 			</ButtonGroup>
-
-			<DeleteModal data={articleData.id} />
 		</Flex>
 	);
 }

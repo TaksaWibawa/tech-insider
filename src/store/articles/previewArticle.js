@@ -19,6 +19,9 @@ const previewArticleSlice = createSlice({
 		togglePreview: (state) => {
 			state.isPreview = !state.isPreview;
 		},
+		setArticleData: (state, action) => {
+			state.formData = action.payload;
+		},
 		updateArticleData: (state, action) => {
 			const payload = action.payload;
 			const formData = state.formData;
@@ -32,8 +35,12 @@ const previewArticleSlice = createSlice({
 	},
 });
 
-export const { togglePreview, updateArticleData, resetArticleData } =
-	previewArticleSlice.actions;
+export const {
+	togglePreview,
+	setArticleData,
+	updateArticleData,
+	resetArticleData,
+} = previewArticleSlice.actions;
 
 export const selectPreviewArticle = (state) => state.previewArticle;
 
