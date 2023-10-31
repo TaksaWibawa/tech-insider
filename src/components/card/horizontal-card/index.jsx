@@ -37,7 +37,7 @@ export function HorizontalArticleCard({ articleData, toggleDelete }) {
 			alignItems={"center"}
 			borderRadius={"lg"}
 			borderWidth={"1px"}
-			flexDirection={"row"}
+			flexDirection={{ base: "column", md: "row" }}
 			mb={4}
 			p={4}
 			boxShadow={"md"}
