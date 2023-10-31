@@ -75,10 +75,12 @@ Tech Insider adalah sebuah website blog yang fokus pada topik-topik seputar tekn
    - User melakukan login dengan menggunakan email dan password.
    - Jika user belum memiliki akun, maka user dapat melakukan registrasi dengan mengisi form yang disediakan.
    - Field yang harus diisi pada form registrasi adalah:
-     a. Email
-     b. Password
-     c. Nama Depan
-     d. Nama Belakang
+  
+         - Email
+         - Password
+         - Nama Depan
+         - Nama Belakang
+     
    - Jika user sudah memiliki akun, maka user dapat melakukan login dengan mengisi form yang disediakan.
 
 2. **Authenticated User**
