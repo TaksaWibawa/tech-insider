@@ -162,10 +162,11 @@ export function ChatbotSection() {
 						name="message"
 						control={control}
 						defaultValue=""
+						rules={{ required: true }}
 						render={({ field }) => (
 							<Input
 								{...field}
-								placeholder="Type your message here"
+								placeholder={loading ? "Loading..." : "Type your message here"}
 								variant="filled"
 								size="lg"
 								rounded="lg"
@@ -174,6 +175,7 @@ export function ChatbotSection() {
 								_hover={{
 									bgColor: "gray.300",
 								}}
+								readOnly={loading}
 							/>
 						)}
 					/>
