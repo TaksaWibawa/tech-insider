@@ -5,14 +5,17 @@ import { Sidebar } from "@/components/sidebar";
 import { useChangeDocTitle } from "@/hooks/useChangeDocTitle";
 import { useEffect, useState } from "react";
 import { SuccessModal } from "@/components/modal/success-modal";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { getDeleteArticleById } from "@/store/articles/deleteArticleById";
 import { getUpdateArticleById } from "@/store/articles/updateArticleById";
 import { FailedModal } from "@/components/modal/failed-modal";
+import { ChatbotSection } from "@/components/section/chatbot-section";
+import { resetChatbot } from "@/store/chatbot";
 
 export default function DashboardPage() {
 	const [content, setContent] = useState("Dashboard");
 	const [showAlert, setShowAlert] = useState(false);
+	const dispatch = useDispatch();
 
 	useChangeDocTitle(content + " Section");
 
@@ -24,6 +27,12 @@ export default function DashboardPage() {
 			setShowAlert(true);
 		}
 	}, [statusDelete, statusUpdate]);
+
+	useEffect(() => {
+		return () => {
+			dispatch(resetChatbot());
+		};
+	}, [dispatch]);
 
 	return (
 		<Flex minH="100vh">
@@ -55,21 +64,9 @@ export default function DashboardPage() {
 						Profile Page
 					</Container>
 				)}
-				{content === "Setting" && (
-					<Container
-						as={"main"}
-						maxW={"100%"}
-						display={"flex"}
-						flex={1}
-						flexDir={"column"}
-						gap={5}
-						px={12}
-						centerContent
-					>
-						Setting Page
-					</Container>
-				)}
+				{content === "Chatbot" && <ChatbotSection />}
 			</VStack>
+
 			{showAlert && statusUpdate === "success" && (
 				<SuccessModal
 					title="Success"
