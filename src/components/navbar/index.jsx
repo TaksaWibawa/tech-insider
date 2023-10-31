@@ -3,69 +3,82 @@ import {
 	Button,
 	ButtonGroup,
 	Container,
+	Divider,
 	Flex,
+	Heading,
 	HStack,
 	Icon,
 	Menu,
 	MenuButton,
 	MenuItem,
 	MenuList,
+	Text,
+	useDisclosure,
 } from "@chakra-ui/react";
-import { BaseImage } from "../icons";
-import { ButtonBasic, ButtonOutlinePrimary, ButtonPrimary } from "../button";
-import { RiMenu2Line, RiArrowDropDownLine } from "react-icons/ri";
-import { SearchBar } from "../search-bar";
-import { NavLink } from "react-router-dom";
-import { useState } from "react";
+import { authService } from "@/config/auth";
+import { BaseImage } from "@/components/icons";
+import {
+	ButtonBasic,
+	ButtonOutlinePrimary,
+	ButtonPrimary,
+} from "@/components/button";
+import { clearUser, currentUser, userStatus } from "@/store/users/manageUser";
+import { menuItems } from "@/constant/menuItems";
+import { MobileNavbar } from "@/components/navbar/mobile";
+import { NavLink, useLocation, useNavigate } from "react-router-dom";
+import { RiMenu2Line } from "react-icons/ri";
+import { SearchBar } from "@/components/search-bar";
+import { useDispatch, useSelector } from "react-redux";
 
 export function Navbar() {
-	const [isAuth, setIsAuth] = useState(false); // temporary
+	const dispatch = useDispatch();
+	const location = useLocation();
+	const navigate = useNavigate();
+	const { isOpen, onOpen, onClose } = useDisclosure();
 
-	const menuItems = [
-		{
-			label: "Dashboard",
-			path: "/dashboard",
-			_hover: {
-				bgColor: "gray.100",
-				color: "gray.800",
-			},
-		},
-		{
-			label: "Profile",
-			path: "/dashboard/profile",
-			_hover: {
-				bgColor: "gray.100",
-				color: "gray.800",
-			},
-		},
-		{
-			label: "Sign Out",
-			path: "/logout",
-			_hover: {
-				bgColor: "red.500",
-				color: "white",
-			},
-		},
-	];
+	const isAuthenticated = useSelector(userStatus);
+	const user = useSelector(currentUser);
+
+	const isPathActive = (path) => {
+		return location.pathname === path;
+	};
+
+	const handleLogout = async () => {
+		try {
+			await authService.logOut();
+			dispatch(clearUser());
+			navigate("/");
+		} catch (err) {
+			console.error(err);
+		}
+	};
 
 	return (
 		<Container
 			as="nav"
-			maxW={"100%"}
 			bg={"white"}
 			borderBottom={"1px solid #E0E0E0"}
+			maxW={"100%"}
 			pos={"sticky"}
-			py={{ base: 5, lg: 7 }}
 			px={{ base: 4, lg: 12 }}
+			py={{ base: 5, lg: 7 }}
 			top={0}
-			zIndex={999}
+			zIndex={1000}
 		>
+			<MobileNavbar
+				isOpen={isOpen}
+				onClose={onClose}
+				isAuthenticated={isAuthenticated}
+				currentUser={user}
+				onLogout={handleLogout}
+			/>
+
 			<HStack spacing={12}>
 				<Flex
-					justifyContent={{ base: "space-between", lg: "flex-start" }}
-					gap={20}
 					align={"center"}
 					flex={{ base: "1 1 100%", lg: "1 1 50%" }}
+					gap={20}
+					justifyContent={{ base: "space-between", lg: "flex-start" }}
 					px={{ base: 2, md: 0 }}
 				>
 					<Button
@@ -80,14 +93,17 @@ export function Navbar() {
 							pos={"relative"}
 							top={"0.20rem"}
 							left={"0.20rem"}
+							onClick={onOpen}
 						>
 							<RiMenu2Line />
 						</Icon>
 					</Button>
-					<BaseImage
-						w={{ base: "100px", md: "150px" }}
-						h={"auto"}
-					/>
+					<NavLink to="/">
+						<BaseImage
+							w={{ base: "100px", md: "110px", lg: "140px" }}
+							h={"auto"}
+						/>
+					</NavLink>
 					<SearchBar display={{ base: "none", md: "block" }} />
 				</Flex>
 
@@ -96,17 +112,11 @@ export function Navbar() {
 					align={"center"}
 					display={{ base: "none", md: "flex" }}
 				>
-					<ButtonGroup gap={2}>
-						<NavLink to="/">
-							<ButtonBasic>Home</ButtonBasic>
-						</NavLink>
-
-						{!isAuth ? (
+					<ButtonGroup gap={3}>
+						{!isAuthenticated ? (
 							<>
 								<NavLink to="/login">
-									<ButtonOutlinePrimary onClick={() => setIsAuth(!isAuth)}>
-										Sign In
-									</ButtonOutlinePrimary>
+									<ButtonOutlinePrimary>Sign In</ButtonOutlinePrimary>
 								</NavLink>
 								<NavLink to="/register">
 									<ButtonPrimary>Sign Up</ButtonPrimary>
@@ -114,32 +124,82 @@ export function Navbar() {
 							</>
 						) : (
 							<>
-								<NavLink to="/write">
-									<ButtonBasic>Write</ButtonBasic>
+								<NavLink to="/">
+									<ButtonBasic
+										isActive={isPathActive("/") ? true : false}
+										_active={{
+											color: "white",
+											bgColor: "blue.500",
+										}}
+									>
+										Home
+									</ButtonBasic>
 								</NavLink>
-								<Menu>
+								<NavLink to="/write">
+									<ButtonBasic
+										isActive={isPathActive("/write") ? true : false}
+										_active={{
+											color: "white",
+											bgColor: "blue.500",
+										}}
+									>
+										Write
+									</ButtonBasic>
+								</NavLink>
+
+								<Divider
+									orientation="vertical"
+									bg={"transparent"}
+									mx={3}
+								/>
+
+								<Menu isLazy>
 									<MenuButton
-										variant="unstyled"
+										as={Button}
 										px={4}
+										variant="unstyled"
+										padding={0}
 									>
 										<Avatar
-											size={"sm"}
-											src="https://bit.ly/dan-abramov"
+											size={"md"}
+											position={"absolute"}
+											src={user?.photoURL || "bit.ly/dan-abramov"}
+											top={-1}
+											left={0}
 										/>
-										<Icon
-											boxSize={7}
-											pos={"relative"}
-											top={"0.55rem"}
-											left={"0rem"}
-										>
-											<RiArrowDropDownLine />
-										</Icon>
 									</MenuButton>
-									<MenuList>
+									<MenuList
+										fontSize={"md"}
+										fontWeight={"semibold"}
+										color={"gray.500"}
+										borderRadius={"lg"}
+									>
+										<Heading
+											fontSize={"xl"}
+											fontWeight={"bold"}
+											letterSpacing={"wide"}
+											color={"gray.700"}
+											p={3}
+										>
+											{user?.displayName || "Guest"}
+
+											<Text
+												fontSize={"sm"}
+												fontWeight={"normal"}
+												color={"gray.500"}
+												mt={1}
+											>
+												{user?.email || ""}
+											</Text>
+										</Heading>
+
 										{menuItems.map((item) => (
 											<NavLink
 												key={item.path}
 												to={item.path}
+												onClick={
+													item.label === "Sign Out" ? handleLogout : null
+												}
 											>
 												<MenuItem _hover={item._hover}>{item.label}</MenuItem>
 											</NavLink>

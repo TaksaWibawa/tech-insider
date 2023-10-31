@@ -1,11 +1,14 @@
 /* eslint-disable react/no-unescaped-entities */
-import { BaseLayout, GridLayout } from "../layouts";
+import { BaseLayout, GridLayout } from "@/layouts";
 import { Box, Button, GridItem, Heading, Text, VStack } from "@chakra-ui/react";
 import { Link } from "react-router-dom";
-import { SignUpForm } from "../components/form/signup";
-import { SignUpImage } from "../components/icons";
+import { SignUpForm } from "@/components/form/signup";
+import { SignUpImage } from "@/components/icons";
+import { useChangeDocTitle } from "@/hooks/useChangeDocTitle";
 
-function RegisterPage() {
+export default function RegisterPage() {
+	useChangeDocTitle("Sign Up");
+
 	return (
 		<BaseLayout>
 			<GridLayout
@@ -14,7 +17,6 @@ function RegisterPage() {
 					lg: "1fr 1fr",
 					xl: "1fr 1fr 0.5fr",
 				}}
-				px={{ base: 2, lg: 10, xl: 20 }}
 			>
 				<GridItem
 					colSpan={1}
@@ -60,7 +62,7 @@ function RegisterPage() {
 					py={10}
 					pl={{ base: 0, xl: 20 }}
 				>
-					<Box>
+					<Box w={"full"}>
 						<SignUpImage
 							w={"full"}
 							h={"auto"}
@@ -71,5 +73,3 @@ function RegisterPage() {
 		</BaseLayout>
 	);
 }
-
-export default RegisterPage;

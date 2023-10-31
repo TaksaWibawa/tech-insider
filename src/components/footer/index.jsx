@@ -1,6 +1,6 @@
 import { Button, HStack, Text, VStack } from "@chakra-ui/react";
-import { WhiteImage } from "../icons";
 import { NavLink } from "react-router-dom";
+import { WhiteImage } from "../icons";
 
 export function Footer() {
 	const links = [
