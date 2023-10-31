@@ -13,53 +13,55 @@ Tech Insider adalah sebuah website blog yang fokus pada topik-topik seputar tekn
 ## Struktur Folder
 
 ```sh
-├───apis # berisi file-file yang berhubungan dengan API (firebase)
-├───assets # berisi file-file yang berhubungan dengan aset (gambar, dll)
-├───components # berisi file-file komponen yang digunakan dalam website
-│ ├───button
-│ ├───card
-│ │ └───horizontal-card
-│ ├───footer
-│ ├───form # berisi file-file komponen form
-│ │ ├───create-article
-│ │ ├───edit-article
-│ │ ├───signin
-│ │ └───signup
-│ ├───icons # berisi file-file komponen gambar yang diubah menjadi icon
-│ ├───markdown # berisi file-file komponen markdown yang digunakan pada fitur write and read article
-│ │ ├───markdown-editor
-│ │ └───markdown-previewer
-│ ├───modal
-│ │ ├───delete-modal
-│ │ ├───failed-modal
-│ │ └───success-modal
-│ ├───navbar # berisi file-file komponen navbar
-│ │ ├───dashboard
-│ │ └───mobile
-│ ├───pagination # berisi file-file komponen pagination yang digunakan untuk dashboard
-│ ├───search-bar
-│ ├───section # berisi file-file komponen section
-│ │ ├───article-section
-│ │ ├───dashboard-section
-│ │ ├───hero-section
-│ │ └───preview-section
-│ ├───sidebar
-│ ├───skeleton # berisi file-file komponen skeleton yang digunakan untuk loading
-│ │ └───article
-│ ├───spinner # berisi file-file komponen spinner yang digunakan untuk loading
-│ └───tooltip
-├───config # berisi file-file konfigurasi (firebase, openai, auth)
-├───constant # berisi file-file static yang digunakan dalam website
-├───hooks # berisikan custom hooks yang digunakan dalam website
-├───layouts # berisi file-file layout yang digunakan dalam website
-├───pages # berisi file-file halaman yang digunakan dalam website
-├───routes # berisi file untuk private dan protected route
-│ ├───private-route
-│ └───protected-route
-├───services # berisi file-file service yang digunakan dalam website
-├───store
-│ ├───articles
-│ └───users
+├───apis
+├───assets
+├───components
+│   ├───button
+│   ├───card
+│   │   └───horizontal-card
+│   ├───footer
+│   ├───form
+│   │   ├───create-article
+│   │   ├───edit-article
+│   │   ├───signin
+│   │   └───signup
+│   ├───icons
+│   ├───markdown
+│   │   ├───markdown-editor
+│   │   └───markdown-previewer
+│   ├───modal
+│   │   ├───delete-modal
+│   │   ├───failed-modal
+│   │   └───success-modal
+│   ├───navbar
+│   │   ├───dashboard
+│   │   └───mobile
+│   ├───pagination
+│   ├───search-bar
+│   ├───section
+│   │   ├───article-section
+│   │   ├───chatbot-section
+│   │   ├───dashboard-section
+│   │   ├───hero-section
+│   │   └───preview-section
+│   ├───sidebar
+│   ├───skeleton
+│   │   └───article
+│   ├───spinner
+│   └───tooltip
+├───config
+├───constant
+├───hooks
+├───layouts
+├───pages
+├───routes
+│   ├───private-route
+│   └───protected-route
+├───services
+└───store
+    ├───articles
+    ├───chatbot
+    └───users
 ```
 
 ## Teknologi yang Digunakan

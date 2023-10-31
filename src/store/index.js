@@ -9,10 +9,12 @@ import { fetchArticlesReducer } from "@/store/articles/fetchArticles";
 import { manageUserReducer } from "@/store/users/manageUser";
 import { previewArticleReducer } from "@/store/articles/previewArticle";
 import { updateArticleByIdReducer } from "@/store/articles/updateArticleById";
+import { chatbotReducer } from "./chatbot";
 
 export const store = configureStore({
 	reducer: {
 		addArticle: addArticleReducer,
+		chatbot: chatbotReducer,
 		createAccount: createAccountReducer,
 		deleteArticleById: deleteArticleByIdReducer,
 		deleteThumbnailByUrl: deleteThumbnailByUrlReducer,

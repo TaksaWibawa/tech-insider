@@ -2,14 +2,14 @@
 import { authService } from "@/config/auth";
 import { BaseImage } from "@/components/icons";
 import { Box, Button, ButtonGroup, Flex, Icon, VStack } from "@chakra-ui/react";
-import { FaCog, FaUser, FaSignOutAlt, FaHome } from "react-icons/fa";
+import { FaUser, FaSignOutAlt, FaHome, FaRobot } from "react-icons/fa";
 import { Link, useNavigate } from "react-router-dom";
 import { RiProfileFill } from "react-icons/ri";
 
 const menuItems = [
 	{ label: "Dashboard", icon: <RiProfileFill /> },
 	{ label: "Profile", icon: <FaUser /> },
-	{ label: "Setting", icon: <FaCog /> },
+	{ label: "Chatbot", icon: <FaRobot /> },
 	{ label: "Go to Home", icon: <FaHome /> },
 ];
 
