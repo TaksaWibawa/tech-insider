@@ -32,3 +32,4 @@ const createAccountSlice = createSlice({
 });
 
 export const createAccountReducer = createAccountSlice.reducer;
+export const registerSelector = (state) => state.createAccount;

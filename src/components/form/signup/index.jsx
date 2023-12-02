@@ -8,11 +8,12 @@ import {
 	Grid,
 	HStack,
 	Input,
+	Text,
 } from "@chakra-ui/react";
 import { useForm } from "react-hook-form";
 import { ButtonPrimary } from "@/components/button";
-import { useDispatch } from "react-redux";
-import { createAccount } from "@/store/users/createAccount";
+import { useDispatch, useSelector } from "react-redux";
+import { createAccount, registerSelector } from "@/store/users/createAccount";
 import { useNavigate } from "react-router";
 
 export function SignUpForm() {
@@ -26,18 +27,22 @@ export function SignUpForm() {
 
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
+	const { status, message } = useSelector(registerSelector);
 
 	function onSubmit(data, e) {
+		e.preventDefault();
 		const { firstName, lastName, username, email, password } = data;
 		try {
 			dispatch(
 				createAccount({ firstName, lastName, username, email, password })
 			);
-			reset();
-			navigate("/login");
 		} catch (error) {
-			e.preventDefault();
 			throw new Error(error);
+		} finally {
+			reset();
+			if (status === "success") {
+				navigate("/login");
+			}
 		}
 	}
 
@@ -88,7 +93,6 @@ export function SignUpForm() {
 					</FormErrorMessage>
 				</FormControl>
 			</Grid>
-
 			<FormControl isInvalid={errors.username}>
 				<FormLabel htmlFor="username">Username</FormLabel>
 				<Input
@@ -111,7 +115,6 @@ export function SignUpForm() {
 					{errors.username && errors.username.message}
 				</FormErrorMessage>
 			</FormControl>
-
 			<FormControl isInvalid={errors.email}>
 				<FormLabel htmlFor="email">Email</FormLabel>
 				<Input
@@ -130,7 +133,6 @@ export function SignUpForm() {
 					{errors.email && errors.email.message}
 				</FormErrorMessage>
 			</FormControl>
-
 			<FormControl isInvalid={errors.password}>
 				<FormLabel htmlFor="password">Password</FormLabel>
 				<Input
@@ -149,7 +151,6 @@ export function SignUpForm() {
 					{errors.password && errors.password.message}
 				</FormErrorMessage>
 			</FormControl>
-
 			<FormControl isInvalid={errors.confirmPassword}>
 				<FormLabel htmlFor="confirm-password">Confirm Password</FormLabel>
 				<Input
@@ -169,7 +170,6 @@ export function SignUpForm() {
 					{errors.confirmPassword && errors.confirmPassword.message}
 				</FormErrorMessage>
 			</FormControl>
-
 			<FormControl isInvalid={errors.terms}>
 				<HStack spacing={4}>
 					<Checkbox
@@ -195,9 +195,19 @@ export function SignUpForm() {
 			<ButtonPrimary
 				type="submit"
 				w={"full"}
+				isLoading={status === "loading"}
 			>
 				Sign Up
 			</ButtonPrimary>
+			{status === "failed" && (
+				<Text
+					lineHeight={1.5}
+					color="red.500"
+					textAlign={"center"}
+				>
+					{message}
+				</Text>
+			)}
 		</form>
 	);
 }
