@@ -9,8 +9,12 @@ import {
 } from "@chakra-ui/react";
 import { APIAuth } from "@/apis/auth.api";
 import { ButtonPrimary } from "@/components/button";
-import { setAuthenticated, setUser } from "@/store/users/manageUser";
-import { useDispatch } from "react-redux";
+import {
+	setAuthenticated,
+	setUser,
+	userStatus,
+} from "@/store/users/manageUser";
+import { useDispatch, useSelector } from "react-redux";
 import { useForm } from "react-hook-form";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -23,19 +27,26 @@ export function SignInForm() {
 	} = useForm();
 
 	const [loginError, setLoginError] = useState("");
+	const [isLoading, setIsLoading] = useState(false);
+	const isAuthenticated = useSelector(userStatus);
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
 
 	const onSubmit = async ({ email, password }, e) => {
 		e.preventDefault();
 		try {
+			setIsLoading(true);
 			const user = await APIAuth.login({ email, password });
 			dispatch(setAuthenticated());
 			dispatch(setUser(user));
-			navigate("/");
 		} catch (error) {
 			setLoginError("Failed to login. Please check your credentials.");
 			throw new Error(error);
+		} finally {
+			if (isAuthenticated) {
+				setIsLoading(false);
+				navigate("/");
+			}
 		}
 	};
 
@@ -96,6 +107,7 @@ export function SignInForm() {
 			<ButtonPrimary
 				type="submit"
 				w={"full"}
+				isLoading={isLoading}
 			>
 				Sign In
 			</ButtonPrimary>

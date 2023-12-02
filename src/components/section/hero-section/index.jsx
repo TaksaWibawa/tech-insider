@@ -36,12 +36,15 @@ export function HeroSection() {
 					<Text
 						as={"p"}
 						color={"#000000CC"}
-						fontSize={{ base: "0.85rem", sm: "1rem", lg: "1.25rem" }}
+						fontSize={{ base: "0.75rem", lg: "1.15rem" }}
 						mx={{ base: 4, lg: 0 }}
 					>
-						Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras
-						hendrerit enim nec libero luctus pellentesque. Donec cursus, velit
-						ut aliquet aliquam, metus lorem auctor ipsum,
+						Welcome to Tech Insider, your go-to blog for the latest in tech and
+						innovation. Dive into insightful articles and reviews covering
+						gadgets, scientific breakthroughs, and more. Whether you're a tech
+						enthusiast or just curious, stay ahead with us in the dynamic world
+						of technology. Welcome to the forefront of innovation – welcome to
+						Tech Insider.
 					</Text>
 				</Flex>
 				<Flex
