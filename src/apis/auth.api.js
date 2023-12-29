@@ -1,12 +1,8 @@
+import { APIProfile } from "./profile.api";
 import { auth, db } from "@/config/firebase";
-import {
-	signInWithEmailAndPassword,
-	createUserWithEmailAndPassword,
-	updateProfile,
-} from "@firebase/auth";
 import { authService } from "@/config/auth";
 import { doc, setDoc } from "@firebase/firestore";
-import { APIProfile } from "./profile.api";
+import { signInWithEmailAndPassword, createUserWithEmailAndPassword, updateProfile } from "@firebase/auth";
 
 export const APIAuth = {
 	login: async ({ email, password }) => {
@@ -34,11 +30,7 @@ export const APIAuth = {
 
 	register: async ({ firstName, lastName, username, email, password }) => {
 		try {
-			const result = await createUserWithEmailAndPassword(
-				auth,
-				email,
-				password
-			);
+			const result = await createUserWithEmailAndPassword(auth, email, password);
 			const user = result.user;
 
 			// update profile in firestore
